@@ -7,6 +7,11 @@ sudo apt-get install neovim -y
 pip2 install --user neovim
 pip3 install --user neovim
 
+# Install the vimrc
+# TODO(cristiandonosoc): Vim plugins
+ln -s `pwd`/vimrc ~/.vimrc
+touch ~/.vimrc.local
+
 # TMUX
 ################################################################
 sudo apt-get install tmux -y
@@ -22,7 +27,7 @@ make
 sudo make install
 cd -
 
-# TODO(donosoc): Install vim bindings
+# TODO(cristiandonosoc): Install vim bindings
 
 # FISH
 ################################################################
