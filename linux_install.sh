@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# GIT
-################################################################
-sudo apt-get install git -y
-
 # NEOVIM
 ################################################################
 sudo apt-get install python-pip python3-pip -y
@@ -16,6 +12,17 @@ pip3 install --user neovim
 sudo apt-get install tmux -y
 ln -s `pwd`/tmux.conf ~/.tmux.conf
 touch ~/.tmux.conf.local
+
+# FZY
+################################################################
+
+git clone https://github.com/jhawthorn/fzy /tmp/fzy
+cd /tmp/fzy
+make
+sudo make install
+cd -
+
+# TODO(donosoc): Install vim bindings
 
 # FISH
 ################################################################
@@ -39,7 +46,7 @@ fish -c "install_plugins ~/.config/fish/fish.plugins"
 
 # Have bash open fish
 # Better to open fish directly from the terminal
-echo "fish" >> ~/.bashrc.local
+echo "fish && exit" >> ~/.bashrc.local
 echo "source ~/.bashrc.local" > ~/.bashrc
 echo "Make the terminal start fish"
 

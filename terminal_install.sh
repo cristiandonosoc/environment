@@ -8,15 +8,16 @@ sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip
 curl https://sh.rustup.rs -sSf | sh
 
 ## Compile
-git clone https://github.com/jwilm/alacritty.git
-cd alacritty
+git clone https://github.com/jwilm/alacritty.git /tmp/alacritty
+cd /tmp/alacritty
 cargo build --release
 
 ## Install fish completions
 sudo cp alacritty-completions.fish $__fish_datadir/vendor_completions.d/alacritty.fish
 
+cd -
+
 ## Install config file
-cd ..
 mkdir -p ~/.config/alacritty
 cp alacritty.yml ~/.config/alacritty # Copy... all machines are different
 
