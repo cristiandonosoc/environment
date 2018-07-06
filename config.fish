@@ -9,9 +9,12 @@ alias vim "nvim"
 set -g EDITOR nvim
 
 # Bob-the-fish
-set -g theme_newline_cursor yes
-set -g theme_display_git yes
-set -g theme_show_exit_status yes
+set -g theme_newline_cursor yes             # 2 lines prompt
+set -g theme_display_git yes                # Display git status
+set -g theme_display_git_master_branch yes  # Display "master" name in git display
+set -g theme_show_exit_status yes           # Show status code of last command
+
+# Prompt doesn't abbreviate paths
 set -g fish_prompt_pwd_dir_length 0
 
 # Source rust
@@ -19,7 +22,7 @@ if test -e ~/.cargo/env
   source ~/.cargo/env
 end
 
-# Source local
+# Source local config
 if test -e ~/.config/fish/config.fish.local
   source ~/.config/fish/config.fish.local
 end
