@@ -13,6 +13,7 @@ set -g theme_newline_cursor yes             # 2 lines prompt
 set -g theme_display_git yes                # Display git status
 set -g theme_display_git_master_branch yes  # Display "master" name in git display
 set -g theme_show_exit_status yes           # Show status code of last command
+set -g theme_display_git_dirty_verbose yes  # Amount
 
 # Prompt doesn't abbreviate paths
 set -g fish_prompt_pwd_dir_length 0
