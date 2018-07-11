@@ -55,5 +55,16 @@ echo "fish && exit" >> ~/.bashrc.local
 echo "source ~/.bashrc.local" > ~/.bashrc
 echo "Make the terminal start fish"
 
+# XCAPE
+# This is for mapping an alone shift press to escape
+################################################################
+
+sudo apt-get install git gcc make pkg-config libx11-dev libxtst-dev libxi-dev
+git clone https://github.com/alols/xcape.git /tmp/xcape
+cd /tmp/xcape
+make
+sudo make install
+
+
 echo "For custom terminal (Alacritty), run linux_terminal_install.sh"
 

@@ -9,6 +9,7 @@ My environment setup that I use to standarize every machine I work on
 - Tmux
 - Alacritty
 
-TODO: Install vim setup
-TODO: Do OSX support
-TODO: Do Windows support
+- TODO: Move to python for better scripting control
+- TODO: Install vim setup
+- TODO: Do OSX support
+- TODO: Do Windows support
