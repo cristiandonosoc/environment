@@ -1,70 +1,170 @@
 #!/bin/bash
+# 2018 Cristián Donoso.
+# This software is distributed as Public Domain.
+# Feel free to use it whoever you like.
 
-# NEOVIM
-################################################################
-sudo apt-get install python-pip python3-pip -y
-sudo apt-get install neovim -y
-pip2 install --user neovim
-pip3 install --user neovim
+### Install several environment utils I use
+### NOTE: Adding a new functions must be added to the help, the switch and the
+###       InstallAll function.
 
-# Install the vimrc
-# TODO(cristiandonosoc): Vim plugins
-ln -s `pwd`/vimrc ~/.vimrc
-touch ~/.vimrc.local
-
-# TMUX
-################################################################
-sudo apt-get install tmux -y
-ln -s `pwd`/tmux.conf ~/.tmux.conf
-touch ~/.tmux.conf.local
-
-# FZY
-################################################################
-
-git clone https://github.com/jhawthorn/fzy /tmp/fzy
-cd /tmp/fzy
-make
-sudo make install
-cd -
-
-# TODO(cristiandonosoc): Install vim bindings
-
-# FISH
-################################################################
-# Install fish
-sudo apt-get install fish
-
-# Install fisherman
-curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
-
-# Install the config.fish
-mkdir -p ~/.config/fish/functions
-ln -s `pwd`/config.fish ~/.config/fish/config.fish
-touch ~/.config/fish/config.fish.local
-
-# Install extra functions
-cp `pwd`/fish_functions/* ~/.config/fish/functions
-
-# Install the plugins
-cp fish.plugins ~/.config/fish
-fish -c "install_plugins ~/.config/fish/fish.plugins"
-
-# Have bash open fish
-# Better to open fish directly from the terminal
-echo "fish && exit" >> ~/.bashrc.local
-echo "source ~/.bashrc.local" > ~/.bashrc
-echo "Make the terminal start fish"
-
-# XCAPE
-# This is for mapping an alone shift press to escape
-################################################################
-
-sudo apt-get install git gcc make pkg-config libx11-dev libxtst-dev libxi-dev
-git clone https://github.com/alols/xcape.git /tmp/xcape
-cd /tmp/xcape
-make
-sudo make install
+## Usage: ./linux_install.sh [--help/-h] [ELEMENTS ...]
+##
+##  ELEMENTS  List of elements to install. If not defined, all of them will be
+##            installed. The elements come can be from the following list:
+##            - neovim: Cool update to vim
+##            - vimrc: My vimrc bindings/plugins/etc.
+##            - tmux: Don't ever work without it.
+##            - fish: Cool shell. Could be better tho.
+##            - fzy: Nice fzy shell. Don't use it much.
+##            - caps_lock: Move caps_lock to escape.
+##            - alacritty: GPU powered terminal.
 
 
-echo "For custom terminal (Alacritty), run linux_terminal_install.sh"
 
+function Prompt() {
+  read -p "Install "$1"? [Y/n]: " response
+
+  if [[ "$response" =~ ^(yes|y| ) ]] || [[ -z "$response" ]]; then
+    return 0
+  fi
+  return 1
+}
+
+if [[ -z "$1" ]]; then
+  echo "No input provided. Installing everything."
+  InstallAll()
+  exit 0
+fi
+
+# Parse the input
+while [[ "$1" =~ ^- ]]; do
+  case "$1" in
+    -h|--help)
+      DisplayHelp()
+      exit 0
+      ;;
+    neovim)
+      InstallNeovim()
+      shift
+      ;;
+    vimrc)
+      InstallVimrc()
+      shift
+      ;;
+    tmux)
+      InstallTmux()
+      shift
+      ;;
+    fish)
+      InstallFish()
+      shift
+      ;;
+    fzy)
+      InstallFzy()
+      shift
+      ;;
+    caps_lock)
+      InstallCapsLock()
+      shift
+      ;;
+    alacritty)
+      InstallAlacritty()
+      shift
+      ;;
+    *)
+      echo -r "Unknown option $1. Ignoring."
+done
+
+# FUNCTION DEFINITIONS
+################################################################################
+
+function InstallAll() {
+  if Prompt "Neovim"; then InstallNeovim(); fi
+  if Prompt "Vimrc"; then InstallVimrc(); fi
+  if Prompt "Tmux"; then InstallTmux(); fi
+  if Prompt "Fish"; then InstallFish(); fi
+  if Prompt "Fzy"; then InstallFzy(); fi
+  if Prompt "CapsLock"; then InstallCapsLock(); fi
+}
+
+function InstallNeovim() {
+  sudo apt-get install python-pip python3-pip -y
+  sudo apt-get install neovim -y
+  pip2 install --user neovim
+  pip3 install --user neovim
+}
+
+function InstallVimrc() {
+  # Install the vimrc
+  # TODO(cristiandonosoc): Vim plugins
+  # TODO(cristiandonosoc): Install vim bindings
+  ln -s `pwd`/vimrc ~/.vimrc
+  touch ~/.vimrc.local
+
+}
+
+function InstallTmux() {
+  sudo apt-get install tmux -y
+  ln -s `pwd`/tmux.conf ~/.tmux.conf
+  touch ~/.tmux.conf.local
+}
+
+function InstallFzy() {
+  git clone https://github.com/jhawthorn/fzy /tmp/fzy
+  cd /tmp/fzy
+  make
+  sudo make install
+  cd -
+}
+
+InstallFish() {
+  sudo apt-get install fish -y
+
+  curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
+
+  # Install the config.fish
+  mkdir -p ~/.config/fish/functions
+  ln -s `pwd`/config.fish ~/.config/fish/config.fish
+  touch ~/.config/fish/config.fish.local
+
+  # Install extra functions
+  cp `pwd`/fish_functions/* ~/.config/fish/functions
+
+  # Install the plugins
+  cp fish.plugins ~/.config/fish
+  fish -c "install_plugins ~/.config/fish/fish.plugins"
+
+  if Prompt "Have bash go directly to fish?"; then
+    echo "source ~/.bashrc.local" > ~/.bashrc
+    echo "fish; exit" >> ~/.bashrc.local
+  fi
+}
+
+function InstallAlacritty() {
+  # Install Alacritty
+  ## Install dependencies
+  sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip
+
+  ## Install Rust (follow instructions)
+  curl https://sh.rustup.rs -sSf | sh
+
+  ## Compile
+  git clone https://github.com/jwilm/alacritty.git /tmp/alacritty
+  cd /tmp/alacritty
+  cargo build --release
+
+  ## Install fish completions
+  sudo cp alacritty-completions.fish $__fish_datadir/vendor_completions.d/alacritty.fish
+
+  cd -
+
+  ## Install config file
+  mkdir -p ~/.config/alacritty
+  cp alacritty.yml ~/.config/alacritty # Copy... all machines are different
+
+  ## Install powerline fonts
+  git clone https://github.com/powerline/fonts.git /tmp/fonts
+  mkdir -p ~/.fonts
+  cp /tmp/fonts/SourceCodePro/Source\ Code\ Pro\ Black\ for\ Powerline.otf ~/.fonts/
+  fc-cache -vf ~/.fonts
+}
