@@ -17,7 +17,6 @@
 ##            - tmux: Don't ever work without it.
 ##            - fish: Cool shell. Could be better tho.
 ##            - fzy: Nice fzy shell. Don't use it much.
-##            - alacritty: GPU powered terminal.
 
 # FUNCTION DEFINITIONS
 ################################################################################
@@ -82,7 +81,7 @@ function InstallVimrc() {
 }
 
 function InstallTmux() {
-  sudo apt-get install tmux -y
+  brew install --user --upgrade tmux
   ln -s `pwd`/tmux.conf ~/.tmux.conf
   touch ~/.tmux.conf.local
 }
@@ -96,7 +95,7 @@ function InstallFzy() {
 }
 
 InstallFish() {
-  sudo apt-get install fish -y
+  brew install --user fish
 
   curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
 
@@ -113,41 +112,12 @@ InstallFish() {
   fish -c "install_plugins ~/.config/fish/fish.plugins"
 
   if Prompt "Have bash go directly to fish?"; then
-    echo "source ~/.bashrc.local" > ~/.bashrc
+  n  echo "source ~/.bashrc.local" > ~/.bashrc
     echo "fish; exit" >> ~/.bashrc.local
   fi
 }
 
-function InstallAlacritty() {
-  # Install Alacritty
-  ## Install dependencies
-  sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip
-
-  ## Install Rust (follow instructions)
-  curl https://sh.rustup.rs -sSf | sh
-
-  ## Compile
-  git clone https://github.com/jwilm/alacritty.git /tmp/alacritty
-  cd /tmp/alacritty
-  cargo build --release
-
-  ## Install fish completions
-  sudo cp alacritty-completions.fish ${__fish_datadir}/vendor_completions.d/alacritty.fish
-
-  cd -
-
-  ## Install config file
-  mkdir -p ~/.config/alacritty
-  cp alacritty.yml ~/.config/alacritty # Copy... all machines are different
-
-  ## Install powerline fonts
-  git clone https://github.com/powerline/fonts.git /tmp/fonts
-  mkdir -p ~/.fonts
-  cp /tmp/fonts/SourceCodePro/Source\ Code\ Pro\ Black\ for\ Powerline.otf ~/.fonts/
-  fc-cache -vf ~/.fonts
-}
-
-function InstallAll() {
+unction InstallAll() {
   if Prompt "Brew"; then InstallBrew; fi
   if Prompt "Neovim"; then InstallNeovim; fi
   if Prompt "Vimrc"; then InstallVimrc; fi
