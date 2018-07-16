@@ -19,7 +19,8 @@
 ##            - caps_lock: Move caps_lock to escape.
 ##            - alacritty: GPU powered terminal.
 
-
+# FUNCTION DEFINITIONS
+################################################################################
 
 function Prompt() {
   read -p "Install "$1"? [Y/n]: " response
@@ -30,61 +31,8 @@ function Prompt() {
   return 1
 }
 
-if [[ -z "$1" ]]; then
-  echo "No input provided. Installing everything."
-  InstallAll()
-  exit 0
-fi
-
-# Parse the input
-while [[ "$1" =~ ^- ]]; do
-  case "$1" in
-    -h|--help)
-      DisplayHelp()
-      exit 0
-      ;;
-    neovim)
-      InstallNeovim()
-      shift
-      ;;
-    vimrc)
-      InstallVimrc()
-      shift
-      ;;
-    tmux)
-      InstallTmux()
-      shift
-      ;;
-    fish)
-      InstallFish()
-      shift
-      ;;
-    fzy)
-      InstallFzy()
-      shift
-      ;;
-    caps_lock)
-      InstallCapsLock()
-      shift
-      ;;
-    alacritty)
-      InstallAlacritty()
-      shift
-      ;;
-    *)
-      echo -r "Unknown option $1. Ignoring."
-done
-
-# FUNCTION DEFINITIONS
-################################################################################
-
-function InstallAll() {
-  if Prompt "Neovim"; then InstallNeovim(); fi
-  if Prompt "Vimrc"; then InstallVimrc(); fi
-  if Prompt "Tmux"; then InstallTmux(); fi
-  if Prompt "Fish"; then InstallFish(); fi
-  if Prompt "Fzy"; then InstallFzy(); fi
-  if Prompt "CapsLock"; then InstallCapsLock(); fi
+function DisplayHelp() {
+  sed -n -e 's/^## //p' -e 's/^##$//p' < "$0"
 }
 
 function InstallNeovim() {
@@ -92,6 +40,10 @@ function InstallNeovim() {
   sudo apt-get install neovim -y
   pip2 install --user neovim
   pip3 install --user neovim
+
+  if Prompt "Also install Vimrc?"; then
+    InstallVimrc
+  fi
 }
 
 function InstallVimrc() {
@@ -101,6 +53,18 @@ function InstallVimrc() {
   ln -s `pwd`/vimrc ~/.vimrc
   touch ~/.vimrc.local
 
+  # Install swap dirs
+  mkdir -p ~/.vim/cache/swap
+  mkdir -p ~/.vim/cache/backup
+  mkdir -p ~/.vim/cache/undo
+
+  # Download Vundle
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+  ln -s $PWD/vundle_plugins.vim  ~/.vim/vundle_plugins.vim
+  touch ~/.vim/vundle_plugins.vim.local
+
+  echo "Run :VundleInstall from vim and remember to install YouCompleteMe manually."
 }
 
 function InstallTmux() {
@@ -168,3 +132,66 @@ function InstallAlacritty() {
   cp /tmp/fonts/SourceCodePro/Source\ Code\ Pro\ Black\ for\ Powerline.otf ~/.fonts/
   fc-cache -vf ~/.fonts
 }
+
+function InstallAll() {
+  if Prompt "Neovim"; then InstallNeovim; fi
+  if Prompt "Vimrc"; then InstallVimrc; fi
+  if Prompt "Tmux"; then InstallTmux; fi
+  if Prompt "Fish"; then InstallFish; fi
+  if Prompt "Fzy"; then InstallFzy; fi
+  if Prompt "CapsLock"; then InstallCapsLock; fi
+}
+
+# INPUT PARSING
+################################################################################
+
+echo "$0"
+DisplayHelp
+exit 0
+
+if [[ -z "$1" ]]; then
+  echo "No input provided. Installing everything."
+  InstallAll
+  exit 0
+fi
+
+# Parse the input
+while [[ "$1" =~ ^- ]]; do
+  case "$1" in
+    -h|--help)
+      DisplayHelp
+      exit 0
+      ;;
+    neovim)
+      InstallNeovim
+      shift
+      ;;
+    vimrc)
+      InstallVimrc
+      shift
+      ;;
+    tmux)
+      InstallTmux
+      shift
+      ;;
+    fish)
+      InstallFish
+      shift
+      ;;
+    fzy)
+      InstallFzy
+      shift
+      ;;
+    caps_lock)
+      InstallCapsLock
+      shift
+      ;;
+    alacritty)
+      InstallAlacritty
+      shift
+      ;;
+    *)
+      echo -r "Unknown option $1. Ignoring."
+done
+
+
