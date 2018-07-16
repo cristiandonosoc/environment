@@ -16,23 +16,22 @@
 ##            - tmux: Don't ever work without it.
 ##            - fish: Cool shell. Could be better tho.
 ##            - fzy: Nice fzy shell. Don't use it much.
-##            - caps_lock: Move caps_lock to escape.
 ##            - alacritty: GPU powered terminal.
 
 # FUNCTION DEFINITIONS
 ################################################################################
 
 function Prompt() {
-  read -p "Install "$1"? [Y/n]: " response
+  read -p "Install ${@}? [Y/n]: " response
 
-  if [[ "$response" =~ ^(yes|y| ) ]] || [[ -z "$response" ]]; then
+  if [[ "${response}" =~ ^(yes|y| ) ]] || [[ -z "${response}" ]]; then
     return 0
   fi
   return 1
 }
 
 function DisplayHelp() {
-  sed -n -e 's/^## //p' -e 's/^##$//p' < "$0"
+  sed -n -e 's/^## //p' -e 's/^##$//p' < "${0}"
 }
 
 function InstallNeovim() {
@@ -48,8 +47,6 @@ function InstallNeovim() {
 
 function InstallVimrc() {
   # Install the vimrc
-  # TODO(cristiandonosoc): Vim plugins
-  # TODO(cristiandonosoc): Install vim bindings
   ln -s `pwd`/vimrc ~/.vimrc
   touch ~/.vimrc.local
 
@@ -61,7 +58,7 @@ function InstallVimrc() {
   # Download Vundle
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-  ln -s $PWD/vundle_plugins.vim  ~/.vim/vundle_plugins.vim
+  ln -s ${PWD}/vundle_plugins.vim  ~/.vim/vundle_plugins.vim
   touch ~/.vim/vundle_plugins.vim.local
 
   echo "Run :VundleInstall from vim and remember to install YouCompleteMe manually."
@@ -118,7 +115,7 @@ function InstallAlacritty() {
   cargo build --release
 
   ## Install fish completions
-  sudo cp alacritty-completions.fish $__fish_datadir/vendor_completions.d/alacritty.fish
+  sudo cp alacritty-completions.fish ${__fish_datadir}/vendor_completions.d/alacritty.fish
 
   cd -
 
@@ -139,25 +136,20 @@ function InstallAll() {
   if Prompt "Tmux"; then InstallTmux; fi
   if Prompt "Fish"; then InstallFish; fi
   if Prompt "Fzy"; then InstallFzy; fi
-  if Prompt "CapsLock"; then InstallCapsLock; fi
 }
 
 # INPUT PARSING
 ################################################################################
 
-echo "$0"
-DisplayHelp
-exit 0
-
-if [[ -z "$1" ]]; then
+if [[ -z "${1}" ]]; then
   echo "No input provided. Installing everything."
   InstallAll
   exit 0
 fi
 
 # Parse the input
-while [[ "$1" =~ ^- ]]; do
-  case "$1" in
+while [[ "${1}" =~ ^- ]]; do
+  case "${1}" in
     -h|--help)
       DisplayHelp
       exit 0
@@ -182,16 +174,13 @@ while [[ "$1" =~ ^- ]]; do
       InstallFzy
       shift
       ;;
-    caps_lock)
-      InstallCapsLock
-      shift
-      ;;
     alacritty)
       InstallAlacritty
       shift
       ;;
     *)
-      echo -r "Unknown option $1. Ignoring."
+      echo -r "Unknown option ${1}. Ignoring."
+  esac
 done
 
 
