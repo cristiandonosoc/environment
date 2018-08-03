@@ -27,22 +27,3 @@ end
 if test -e ~/.config/fish/config.fish.local
   source ~/.config/fish/config.fish.local
 end
-
-function enable_caps_lock
-  xmodmap -e "!clear Lock"
-  xmodmap -e "keycode 66 = Caps_Lock NoSymbol Caps_Lock"
-end
-
-function disable_caps_lock
-  xmodmap -e "clear Lock"
-  xmodmap -e "keycode 66 = Escape NoSymbol Escape"
-end
-
-export DISPLAY=:0
-# Map CapsLock -> Escape
-switch (uname)
-  case Linux
-    disable_caps_lock
-end
-
-

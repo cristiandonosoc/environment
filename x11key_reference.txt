@@ -1,0 +1,20 @@
+function enable_caps_lock
+  xmodmap -e "!clear Lock"
+  xmodmap -e "keycode 66 = Caps_Lock NoSymbol Caps_Lock"
+end
+
+function disable_caps_lock
+  xmodmap -e "clear Lock"
+  xmodmap -e "keycode 66 = Escape NoSymbol Escape"
+end
+
+# export DISPLAY=:0
+# # Map CapsLock -> Escape
+# switch (uname)
+#   case Linux
+#     disable_caps_lock
+# end
+
+# To make it permanent, as soon as the key is disabled:
+xmodmap -pke > ~/.xmodmap
+xmodmap .xmodmap
