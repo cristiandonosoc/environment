@@ -325,6 +325,11 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 vnoremap <silent> <leader>j :call VisualSelection('f', '')<CR>
 vnoremap <silent> <leader>k :call VisualSelection('b', '')<CR>
 
+" VUNDLE (PLUGINS)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+source ~/.vim/vundle_plugins.vim
+
 " SOURCE LOCAL CHANGES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 source ~/.vimrc.local

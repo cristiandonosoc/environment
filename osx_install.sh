@@ -11,12 +11,12 @@
 ##
 ##  ELEMENTS  List of elements to install. If not defined, all of them will be
 ##            installed. The elements come can be from the following list:
+##            - brew: The apt of mac.
 ##            - neovim: Cool update to vim
 ##            - vimrc: My vimrc bindings/plugins/etc.
 ##            - tmux: Don't ever work without it.
 ##            - fish: Cool shell. Could be better tho.
 ##            - fzy: Nice fzy shell. Don't use it much.
-##            - alacritty: GPU powered terminal.
 
 # FUNCTION DEFINITIONS
 ################################################################################
@@ -24,7 +24,7 @@
 function Prompt() {
   read -p "Install ${@}? [Y/n]: " response
 
-  if [[ "${response}" =~ ^(yes|y| ) ]] || [[ -z "${response}" ]]; then
+  if [[ "${response}" =~ ^(Y|y|yes| ) ]] || [[ -z "${response}" ]]; then
     return 0
   fi
   return 1
@@ -34,11 +34,25 @@ function DisplayHelp() {
   sed -n -e 's/^## //p' -e 's/^##$//p' < "${0}"
 }
 
+function InstallBrew() {
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+  # Homebrew people are fucking morons
+  sudo chown -R $(whoami) $(brew --prefix)/*
+}
+
 function InstallNeovim() {
-  sudo apt-get install python-pip python3-pip -y
-  sudo apt-get install neovim -y
-  pip2 install --user neovim
-  pip3 install --user neovim
+  # Install pip
+  brew install python
+  brew install python3
+  pip2 install --user --upgrade neovim
+  pip3 install --user --upgrade neovim
+
+  brew install neovim/neovim/neovim
+  brew link neovim
+
+  mkdir -p ~/.config/nvim
+  ln -s ${PWD}/nvim.init.vim ~/.config/nvim/init.vim
 
   if Prompt "Also install Vimrc?"; then
     InstallVimrc
@@ -47,6 +61,8 @@ function InstallNeovim() {
 
 function InstallVimrc() {
   # Install the vimrc
+  # TODO(cristiandonosoc): Vim plugins
+  # TODO(cristiandonosoc): Install vim bindings
   ln -s `pwd`/vimrc ~/.vimrc
   touch ~/.vimrc.local
 
@@ -65,7 +81,7 @@ function InstallVimrc() {
 }
 
 function InstallTmux() {
-  sudo apt-get install tmux -y
+  brew install --user --upgrade tmux
   ln -s `pwd`/tmux.conf ~/.tmux.conf
   touch ~/.tmux.conf.local
 }
@@ -79,7 +95,7 @@ function InstallFzy() {
 }
 
 InstallFish() {
-  sudo apt-get install fish -y
+  brew install --user fish
 
   curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
 
@@ -96,41 +112,13 @@ InstallFish() {
   fish -c "install_plugins ~/.config/fish/fish.plugins"
 
   if Prompt "Have bash go directly to fish?"; then
-    echo "source ~/.bashrc.local" > ~/.bashrc
+  n  echo "source ~/.bashrc.local" > ~/.bashrc
     echo "fish; exit" >> ~/.bashrc.local
   fi
 }
 
-function InstallAlacritty() {
-  # Install Alacritty
-  ## Install dependencies
-  sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip
-
-  ## Install Rust (follow instructions)
-  curl https://sh.rustup.rs -sSf | sh
-
-  ## Compile
-  git clone https://github.com/jwilm/alacritty.git /tmp/alacritty
-  cd /tmp/alacritty
-  cargo build --release
-
-  ## Install fish completions
-  sudo cp alacritty-completions.fish ${__fish_datadir}/vendor_completions.d/alacritty.fish
-
-  cd -
-
-  ## Install config file
-  mkdir -p ~/.config/alacritty
-  cp alacritty.yml ~/.config/alacritty # Copy... all machines are different
-
-  ## Install powerline fonts
-  git clone https://github.com/powerline/fonts.git /tmp/fonts
-  mkdir -p ~/.fonts
-  cp /tmp/fonts/SourceCodePro/Source\ Code\ Pro\ Black\ for\ Powerline.otf ~/.fonts/
-  fc-cache -vf ~/.fonts
-}
-
-function InstallAll() {
+unction InstallAll() {
+  if Prompt "Brew"; then InstallBrew; fi
   if Prompt "Neovim"; then InstallNeovim; fi
   if Prompt "Vimrc"; then InstallVimrc; fi
   if Prompt "Tmux"; then InstallTmux; fi
@@ -148,13 +136,18 @@ if [[ -z "${1}" ]]; then
 fi
 
 # Parse the input
-while [[ "${1}" =~ ^- ]]; do
+while [[ -n "${1}" ]]; do
   case "${1}" in
     -h|--help)
       DisplayHelp
       exit 0
       ;;
+    brew)
+      InstallBrew
+      shift
+      ;;
     neovim)
+      echo "NEOVIM"
       InstallNeovim
       shift
       ;;
