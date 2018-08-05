@@ -96,4 +96,10 @@ nnoremap <leader>N :clast<cr>
 nnoremap <leader>o :copen<cr>
 nnoremap <leader>c :cclose<cr>
 
+" MOVING
+"-----------------------------------------------------------------
 
+nnoremap <leader>h :exec "vertical resize +20"<cr>
+nnoremap <leader>l :exec "vertical resize -20"<cr>
+nnoremap <leader>j :exec "resize -10"<cr>
+nnoremap <leader>k :exec "resize +10"<cr>
