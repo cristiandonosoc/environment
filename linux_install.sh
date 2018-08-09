@@ -55,6 +55,9 @@ function InstallVimrc() {
   mkdir -p ~/.vim/cache/backup
   mkdir -p ~/.vim/cache/undo
 
+  ln -s $PWD/vimrc_extras.vim ~/.vim/vimrc_extras.vim
+  ln -s $PWD/clang-format.py ~/.vim/clang-format.py
+
   # Download Vundle
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 

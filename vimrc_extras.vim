@@ -1,5 +1,12 @@
 " YouCompleteMe
+"-------------------------------------------------------------------------------
+
 let g:ycm_confirm_extra_conf=0
+let g:ycm_complete_in_comments = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
+" Ycm wrappers
+"-------------------------------------------------------------------------------
 
 function! YcmGoToWrapper(ycm_command, split_kind)
   if a:split_kind == "tabnew"
@@ -35,7 +42,7 @@ nnoremap <leader>giv :call YcmGoToWrapper("GoToInclude", "vs")<cr>
 nnoremap <leader>git :call YcmGoToWrapper("GoToInclude", "tabnew")<cr>
 
 " C++
-""""""""""""""""""""""""""""""""""""""""""""
+"-------------------------------------------------------------------------------
 
 function! HeaderSourceChange(open_cmd)
   let a:path = expand("%:r")
@@ -87,7 +94,7 @@ nnoremap <leader>ffs :call FzyCommand("find -type f", ":sp")<cr>
 nnoremap <leader>fft :call FzyCommand("find -type f", ":tabnew")<cr>
 
 " ERRORS
-"-----------------------------------------------------------------
+"-------------------------------------------------------------------------------
 
 nnoremap <leader>p :cprev<cr>
 nnoremap <leader>P :cfirst<cr>
@@ -97,9 +104,14 @@ nnoremap <leader>o :copen<cr>
 nnoremap <leader>c :cclose<cr>
 
 " MOVING
-"-----------------------------------------------------------------
+"-------------------------------------------------------------------------------
 
 nnoremap <leader>h :exec "vertical resize +20"<cr>
 nnoremap <leader>l :exec "vertical resize -20"<cr>
 nnoremap <leader>j :exec "resize -10"<cr>
 nnoremap <leader>k :exec "resize +10"<cr>
+
+" clang-format
+"-------------------------------------------------------------------------------
+
+map <C-I> :pyf ~/.vim/clang-format.py<cr>
