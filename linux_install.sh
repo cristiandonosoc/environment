@@ -43,6 +43,10 @@ function InstallNeovim() {
   if Prompt "Also install Vimrc?"; then
     InstallVimrc
   fi
+
+  # Vim configuration
+  mkdir -p ~/.config/nvim
+  ln -s $PWD/nvim.init.vim ~/.config/nvim/init.vim
 }
 
 function InstallVimrc() {
@@ -117,8 +121,8 @@ function InstallAlacritty() {
   cd /tmp/alacritty
   cargo build --release
 
-  ## Install fish completions
-  sudo cp alacritty-completions.fish ${__fish_datadir}/vendor_completions.d/alacritty.fish
+  ## Install fish completions (within fish)
+  sudo cp alacritty-completions.fish $__fish_datadir/vendor_completions.d/alacritty.fish
 
   cd -
 
@@ -129,8 +133,21 @@ function InstallAlacritty() {
   ## Install powerline fonts
   git clone https://github.com/powerline/fonts.git /tmp/fonts
   mkdir -p ~/.fonts
-  cp /tmp/fonts/SourceCodePro/Source\ Code\ Pro\ Black\ for\ Powerline.otf ~/.fonts/
+  cp /tmp/fonts/SourceCodePro/*.otf ~/.fonts/
+
+  function
   fc-cache -vf ~/.fonts
+}
+
+function InstallExtras() {
+  # Ripgrep
+  curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb
+  sudo dpkg -i ripgrep_0.9.0_amd64.deb
+
+
+  # fd
+  wget https://github.com/sharkdp/fd/releases/download/v7.1.0/fd_7.1.0_amd64.deb
+  sudo dpkg -i fd_7.1.0_amd64.deb
 }
 
 function InstallAll() {

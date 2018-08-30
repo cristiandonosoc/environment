@@ -50,6 +50,7 @@ set number
 " Show both horizontal and vertical cursor lines
 set cursorline
 set cursorcolumn
+set colorcolumn=81    " Highlight where 80 chars end.
 
 " Show current line, character and file % in status bar
 set ruler

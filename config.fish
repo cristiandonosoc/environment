@@ -1,11 +1,11 @@
 # Paths
 set PATH ~/Local/bin $PATH
+set PATH ~/.cargo/bin $PATH
 
 # aliases
 alias ll "ls -lha"
 alias grep "grep --color"
 alias vim "nvim"
-
 set -g EDITOR nvim
 
 # Bob-the-fish
@@ -90,4 +90,45 @@ switch (uname)
     end
 end
 
+# Fuchsia
+
+function update
+  builtin cd $FUCHSIA_DIR/zircon
+  git checkout JIRI_HEAD 2> /dev/null
+  builtin cd $FUCHSIA_DIR/garnet
+  git checkout JIRI_HEAD 2> /dev/null
+  jiri update
+
+  builtin cd $FUCHSIA_DIR/zircon
+  remaster
+  builtin cd $FUCHSIA_DIR/garnet
+  remaster
+
+  builtin cd $FUCHSIA_DIR
+end
+
+function full_build
+  fx full-build
+end
+
+function upload
+  jiri upload
+end
+
+function zircon
+  cd $FUCHSIA_DIR/zircon
+end
+
+function garnet
+  cd $FUCHSIA_DIR/garnet
+end
+function garnet
+  cd $FUCHSIA_DIR/garnet
+end
+
+function remaster
+  git checkout JIRI_HEAD > /dev/null 2> /dev/null
+  git branch -D master > /dev/null 2> /dev/null
+  git checkout master > /dev/null 2> /dev/null
+end
 
