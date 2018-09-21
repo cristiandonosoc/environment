@@ -23,5 +23,4 @@ if filereadable("~/.vim/vundle_plugins.vim.local")
   source "~/.vim/vundle_plugins.vim.local"
 endif
 
-
 call vundle#end()

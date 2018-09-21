@@ -8,6 +8,8 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " Ycm wrappers
 "-------------------------------------------------------------------------------
 
+" Runs a YCM function to some binding. Enables to do GoTo into vertical and
+" horizontal splits.
 function! YcmGoToWrapper(ycm_command, split_kind)
   if a:split_kind == "tabnew"
     " Tabnew is implemented with promoting the buffer
@@ -44,6 +46,8 @@ nnoremap <leader>git :call YcmGoToWrapper("GoToInclude", "tabnew")<cr>
 " C++
 "-------------------------------------------------------------------------------
 
+" Swap between .h/.cc
+" Can be improved to support .cpp, .hpp, .c ... etc.
 function! HeaderSourceChange(open_cmd)
   let a:path = expand("%:r")
   let a:extension = expand("%:e")
@@ -71,6 +75,8 @@ nnoremap <leader>hss :call HeaderSourceChange("sp")<cr>
 nnoremap <leader>hsv :call HeaderSourceChange("vs")<cr>
 nnoremap <leader>hst :call HeaderSourceChange("tabnew")<cr>
 
+" Fuzzy search your project. Useful, but I never remember to use it, so I
+" never do.
 function! FzyCommand(choice_command, vim_command)
   try
     let output = system(a:choice_command . " | fzy ")
@@ -102,14 +108,6 @@ nnoremap <leader>n :cnext<cr>
 nnoremap <leader>N :clast<cr>
 nnoremap <leader>o :copen<cr>
 nnoremap <leader>c :cclose<cr>
-
-" MOVING
-"-------------------------------------------------------------------------------
-
-nnoremap <leader>h :exec "vertical resize +20"<cr>
-nnoremap <leader>l :exec "vertical resize -20"<cr>
-nnoremap <leader>j :exec "resize -10"<cr>
-nnoremap <leader>k :exec "resize +10"<cr>
 
 " clang-format
 "-------------------------------------------------------------------------------

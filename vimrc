@@ -101,6 +101,15 @@ endif
 " Margin to the left of line numbers used to indicate folding
 set foldcolumn=1
 
+" TAB RESIZE
+"-------------------------------------------------------------------------------
+" Using these will expand the tab vertically and horizontally.
+" I like a lot.
+nnoremap <leader>h :exec "vertical resize +20"<cr>
+nnoremap <leader>l :exec "vertical resize -20"<cr>
+nnoremap <leader>j :exec "resize -10"<cr>
+nnoremap <leader>k :exec "resize +10"<cr>
+
 " COLORS AND FONTS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -139,7 +148,7 @@ set writebackup
 " Swap files for undo, cache and backups
 " These files are left in external directories. Otherwise they polute the
 " current one and is very annoying.
-
+" This requires these folders to be created. See the install script.
 set swapfile
 let swapfolder = 0
 if isdirectory(expand('~/.vim/cache'))
@@ -197,7 +206,6 @@ set tabpagemax=10
 set showmode        " Always show the mode
 set showcmd         " Show command while it is being written
 
-
 set display+=lastline       " If wrap set, display last line
 set virtualedit=block       " Move freely in visual block
 set linebreak               " Wrap at spaces characters
@@ -209,14 +217,16 @@ set splitright              " We always split to the right :)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Treat long lines as break lines (useful when moving around in them)
+" This means that if a line is wrapped, you jump to the wrapped text as if it
+" was another line, instead of jumping over. Very intuitive.
 nnoremap j gj
 nnoremap k gk
 
-" B and E move to beggining/end of line respectively
+" B and E move to beggining/end of line respectively.
 nnoremap B ^
 nnoremap E $
 
-" Map <Space> to search
+" Map <Space> to search. This one is controversial, but I love it.
 map <space> /
 
 " Disable highlight when <leader><space> is pressed
