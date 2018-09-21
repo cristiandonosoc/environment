@@ -106,6 +106,9 @@ InstallFish() {
     echo "source ~/.bashrc.local" > ~/.bashrc
     echo "fish; exit" >> ~/.bashrc.local
   fi
+
+  ln -s ~/.config/fish/config.fish ~/.config.fish
+  ln -s ~/.config/fish/config.fish.local ~/.config.fish.local
 }
 
 function InstallAlacritty() {

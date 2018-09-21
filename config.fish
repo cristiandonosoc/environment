@@ -97,12 +97,14 @@ function update
   git checkout JIRI_HEAD 2> /dev/null
   builtin cd $FUCHSIA_DIR/garnet
   git checkout JIRI_HEAD 2> /dev/null
+  builtin cd $FUCHSIA_DIR/scripts
+  git checkout JIRI_HEAD 2> /dev/null
   jiri update
 
   builtin cd $FUCHSIA_DIR/zircon
-  remaster
+  # remaster
   builtin cd $FUCHSIA_DIR/garnet
-  remaster
+  # remaster
 
   builtin cd $FUCHSIA_DIR
 end
