@@ -23,11 +23,6 @@ if test -e ~/.cargo/env
   source ~/.cargo/env
 end
 
-# Source local config
-if test -e ~/.config/fish/config.fish.local
-  source ~/.config/fish/config.fish.local
-end
-
 
 # My own cd
 function __original_cd --description 'Change directory'
@@ -133,4 +128,21 @@ function remaster
   git branch -D master > /dev/null 2> /dev/null
   git checkout master > /dev/null 2> /dev/null
 end
+
+function start_ssh_agent
+  set SSH_ENV $HOME/.ssh_agent_start
+  echo "Initializing new SSH agent ..."
+  ssh-agent -c | sed 's/^echo/#echo/' > $SSH_ENV
+  echo "succeeded"
+  chmod 600 $SSH_ENV
+  . $SSH_ENV > /dev/null
+  ssh-add
+end
+
+
+# Source local config
+if test -e ~/.config/fish/config.fish.local
+  source ~/.config/fish/config.fish.local
+end
+
 
