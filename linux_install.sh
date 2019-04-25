@@ -78,12 +78,8 @@ echo "Run :VundleInstall from vim. Install YouCompleteMe manually."
 ## -----------------------------------------------------------------------------
 # Fish is another kind of shell that holds some very nice properties and some
 # VERY ANNOYING ones , mainly that they decided to break bash compatibilities.
-# THEY DON'T SUPPORT &&!!!!!
 # This means you will get all kind of annoyances, specially with environment
 # variables and ways to do scripting.
-# Overall I got used to it and use fish everyday, but I wish they weren't so
-# asshole about it. They have a pillar of "user centric", but they decided to
-# screw everyone by making themselved special. Just sad, really.
 #
 # IMPORTANT: The prompt I use requires some special fonts to look good. I
 #            install them in the Alacritty step. Either install the font or
@@ -103,9 +99,9 @@ touch ~/.config/fish/config.fish.local
 # Install extra functions
 cp `pwd`/fish_functions/* ~/.config/fish/functions
 
-# Install the plugins
-cp fish.plugins ~/.config/fish
-fish -c "install_plugins ~/.config/fish/fish.plugins"
+# Install the plugins (within fish).
+> fisher add oh-my-fish/theme-bobthefish
+> fisher add tuvistavie/fish-ssh-agent
 
 # I still start bash and them immediatelly run fish. This sometimes enables me
 # to set up some state from bash.
@@ -117,15 +113,6 @@ fi
 # Link the config to home, instead of having to hunt them down.
 ln -s ~/.config/fish/config.fish ~/.config.fish
 ln -s ~/.config/fish/config.fish.local ~/.config.fish.local
-
-## FZY
-## -----------------------------------------------------------------------------
-# Fuzzy search of files for fish. I don't really use this to be honest.
-git clone https://github.com/jhawthorn/fzy /tmp/fzy
-cd /tmp/fzy
-make
-sudo make install
-cd -
 
 ## ALLACRITTY
 ## -----------------------------------------------------------------------------
