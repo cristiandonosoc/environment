@@ -70,10 +70,42 @@ function! HeaderSourceChange(open_cmd)
   exec a:open_cmd . ' ' . a:new_filename
 endfunction
 
-nnoremap <leader>hsc :call HeaderSourceChange("e")<cr>
-nnoremap <leader>hss :call HeaderSourceChange("sp")<cr>
-nnoremap <leader>hsv :call HeaderSourceChange("vs")<cr>
-nnoremap <leader>hst :call HeaderSourceChange("tabnew")<cr>
+function! PythonHeaderSourceChange(filepath, open_cmd)
+python << EOF
+import os
+import vim
+
+h_extensions = ["h", "hpp"]
+c_extensions = ["c", "cc", "cpp"]
+
+def DoHeaderChange(filepath, open_cmd):
+  filename, fileext = os.path.splitext(filepath)
+  extension = fileext[1:]
+
+  new_extensions = []
+  if extension in h_extensions:
+    new_extensions = c_extensions
+  elif extension in c_extensions:
+    new_extensions = h_extensions
+
+  # Search for a match.
+  for ext in new_extensions:
+    path = os.path.abspath("{}.{}".format(filename, ext))
+    if not os.path.exists(path):
+      continue
+
+    vim.command("{} {}".format(open_cmd, path))
+    break
+
+DoHeaderChange(vim.eval("a:filepath"), vim.eval("a:open_cmd"))
+EOF
+endfunction
+
+"nnoremap <leader>hsc :call HeaderSourceChange("e")<cr>
+nnoremap <leader>hsc :call PythonHeaderSourceChange(expand("%:p"), "e")<cr>
+nnoremap <leader>hss :call PythonHeaderSourceChange(expand("%:p"), "sp")<cr>
+nnoremap <leader>hsv :call PythonHeaderSourceChange(expand("%:p"), "vs")<cr>
+nnoremap <leader>hst :call PythonHeaderSourceChange(expand("%:p"), "tabnew")<cr>
 
 " Fuzzy search your project. Useful, but I never remember to use it, so I
 " never do.
