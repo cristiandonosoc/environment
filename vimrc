@@ -8,6 +8,9 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
+" Disable the god awful Ex mode.
+map Q <Nop>
+
 " Load local .vimrc found in $PWD
 " Secure means that loaded .vimrc through exrc cannot run autocommands
 set exrc
@@ -44,8 +47,7 @@ endtry
 " 7 lines from the top/bottom of the buffer will begin scrolling
 set scrolloff=7
 
-" Show line numbers
-set number
+set nonumber
 
 " Show both horizontal and vertical cursor lines
 set cursorline

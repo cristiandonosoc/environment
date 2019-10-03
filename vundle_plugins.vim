@@ -12,6 +12,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-commentary'
 " Autocomplete with C/C++ semantics
 Plugin 'Valloric/YouCompleteMe'
+" LSP
+"Plugin 'autozimu/LanguageClient-neovim'
 " " Easy scratch pad
 " Plugin 'mtth/scratch.vim'
 " OpenGL syntax

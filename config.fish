@@ -1,3 +1,4 @@
+======
 # Paths
 set PATH ~/Local/bin $PATH
 set PATH ~/.cargo/bin $PATH
@@ -88,61 +89,44 @@ end
 # Fuchsia
 
 function update
-  builtin cd $FUCHSIA_DIR/zircon
-  git checkout JIRI_HEAD 2> /dev/null
-  builtin cd $FUCHSIA_DIR/garnet
-  git checkout JIRI_HEAD 2> /dev/null
-  builtin cd $FUCHSIA_DIR/scripts
+  cd $FUCHSIA_DIR
   git checkout JIRI_HEAD 2> /dev/null
   jiri update
-
-  builtin cd $FUCHSIA_DIR/zircon
-  # remaster
-  builtin cd $FUCHSIA_DIR/garnet
-  # remaster
-
-  builtin cd $FUCHSIA_DIR
 end
 
-function full_build
-  fx full-build
-end
 
 function upload
   jiri upload
 end
 
-function zircon
-  cd $FUCHSIA_DIR/zircon
+function build
+  fx build
+  create_compdb
 end
 
-function garnet
-  cd $FUCHSIA_DIR/garnet
+function create_compdb
+  cd $FUCHSIA_DIR
+  fx compdb
+  python ~/Source/environment/fuchsia_fix.py compile_commands.json
+  mv processed_db.json compile_commands.json
+  cd -
 end
-function garnet
-  cd $FUCHSIA_DIR/garnet
-end
-
-function remaster
-  git checkout JIRI_HEAD > /dev/null 2> /dev/null
-  git branch -D master > /dev/null 2> /dev/null
-  git checkout master > /dev/null 2> /dev/null
-end
-
-function start_ssh_agent
-  set SSH_ENV $HOME/.ssh_agent_start
-  echo "Initializing new SSH agent ..."
-  ssh-agent -c | sed 's/^echo/#echo/' > $SSH_ENV
-  echo "succeeded"
-  chmod 600 $SSH_ENV
-  . $SSH_ENV > /dev/null
-  ssh-add
-end
-
 
 # Source local config
 if test -e ~/.config/fish/config.fish.local
   source ~/.config/fish/config.fish.local
 end
 
+function run_zxdb
+  fx build
+  fx debug --no-agent -- --connect [(fx netaddr --fuchsia)]:5000 $argv
+end
 
+function run_agent
+  fx build
+  fx shell -- run fuchsia-pkg://fuchsia.com/debug_agent#meta/debug_agent.cmx --port 5000 $argv
+end
+
+function kill_agents
+  fx shell -- killall debug_agent.cmx
+end

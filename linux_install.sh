@@ -129,8 +129,9 @@ curl https://sh.rustup.rs -sSf | sh
 git clone https://github.com/jwilm/alacritty.git /tmp/alacritty
 cd /tmp/alacritty
 cargo build --release
+cp target/release/alacritty <FINAL DESTINATION>
 ## Install fish completions (within fish)
-sudo cp alacritty-completions.fish $__fish_datadir/vendor_completions.d/alacritty.fish
+sudo cp extra/completions/alacritty.fish $__fish_data_dir/vendor_completions.d/alacritty.fish
 cd -  # Back to where we were.
 ## Install config file.
 mkdir -p ~/.config/alacritty
@@ -142,8 +143,7 @@ cp alacritty.yml ~/.config/alacritty # Copy... all machines are different.
 git clone https://github.com/powerline/fonts.git /tmp/fonts
 mkdir -p ~/.fonts
 cp /tmp/fonts/SourceCodePro/*.otf ~/.fonts/
-fc-cache -vf ~/.fonts
-
+fc-cache -vf ~/.fonts 
 ## EXTRAS
 ## -----------------------------------------------------------------------------
 # Extra utilities I find very useful day to day.
