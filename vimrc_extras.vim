@@ -76,7 +76,7 @@ import os
 import vim
 
 h_extensions = ["h", "hpp"]
-c_extensions = ["c", "cc", "cpp"]
+c_extensions = ["cc", "cpp", "c"]
 
 def DoHeaderChange(filepath, open_cmd):
   filename, fileext = os.path.splitext(filepath)
@@ -95,7 +95,12 @@ def DoHeaderChange(filepath, open_cmd):
       continue
 
     vim.command("{} {}".format(open_cmd, path))
-    break
+    return
+
+  # If we didn't a header, simply change to the other new extension.
+  # This is normally we wanting to open a new .cc from a new header file.
+  new_path = os.path.abspath("{}.{}".format(filename, new_extensions[0]))
+  vim.command("{} {}".format(open_cmd, new_path))
 
 DoHeaderChange(vim.eval("a:filepath"), vim.eval("a:open_cmd"))
 EOF
