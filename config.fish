@@ -1,4 +1,3 @@
-======
 # Paths
 set PATH ~/Local/bin $PATH
 set PATH ~/.cargo/bin $PATH
@@ -94,6 +93,9 @@ function update
   jiri update
 end
 
+function rebuild
+  update && fx build -k 0 tools/fidlgen_llcpp_zircon:update && fx build && create_compdb
+end
 
 function upload
   jiri upload

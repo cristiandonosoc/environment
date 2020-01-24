@@ -79,29 +79,34 @@ def ProcessEntry(entry):
     "-I", fix_path,
     "-I", "../../prebuilt/third_party/clang/linux-x64/lib/clang/10.0.0/include",
     "-I", "../../prebuilt/third_party/clang/linux-x64/include/c++/v1",
+    "-I", "../../third_party/googletest/googletest/include",
+    "-I", "../../third_party/googletest/googlemock/include",
     "-Wno-format",
+    "-Wmissing-prototypes",
+    "-D__MY_CRAZY_LOCAL_BUILD",
   ]
 
   append = False
   command = entry["command"]
+
   if "zxdb" in command:
     append = True
   elif "ipc" in command:
-    if "protocol" in command:
-      append = True
-    if "message_writeR" in command:
-      append = True
-    if "records" in command:
-      append = True
+    for l in ["protocol", "decode", "message_writer", "records"]:
+      if l in command:
+        append = True
   elif "fidlcat" in command:
     append = True
   elif "shared" in command:
-    if "logging" in command:
-     append = True
+    for l in ["logging", "arch", "address_range"]:
+      if l in command:
+        append = True
   elif "message_loop" in command:
     if "message_loop_target" not in command:
       append = True
   elif "line_input" in command:
+    append = True
+  elif "exception_broker" in command:
     append = True
 
   if append:
@@ -109,7 +114,6 @@ def ProcessEntry(entry):
   else:
     commands.append("-I../../prebuilt/third_party/sysroot/linux/usr/include")
     commands.append("-I../../prebuilt/third_party/sysroot/linux/usr/include/x86_64-linux-gnu")
-    commands.append("-D__MY_CRAZY_LOCAL_BUILD")
 
   index = 10
   for c in commands:
