@@ -2,6 +2,7 @@
 # 2018 Cristián Donoso.
 # This software is distributed as Public Domain.
 # Feel free to use it whoever you like.
+# This is meant to be run on Ubuntu, though other distros should be hard to do.
 
 # Install several environment utils I use
 # Normally I run the commands manually. Takes about 5 minutes.
@@ -143,7 +144,7 @@ cp alacritty.yml ~/.config/alacritty # Copy... all machines are different.
 git clone https://github.com/powerline/fonts.git /tmp/fonts
 mkdir -p ~/.fonts
 cp /tmp/fonts/SourceCodePro/*.otf ~/.fonts/
-fc-cache -vf ~/.fonts 
+fc-cache -vf ~/.fonts
 ## EXTRAS
 ## -----------------------------------------------------------------------------
 # Extra utilities I find very useful day to day.
