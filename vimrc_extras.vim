@@ -1,5 +1,4 @@
-" YouCompleteMe
-"-------------------------------------------------------------------------------
+" YouCompleteMe -------------------------------------------------------------------------------
 
 let g:ycm_confirm_extra_conf=0
 let g:ycm_complete_in_comments = 1
@@ -71,7 +70,7 @@ function! HeaderSourceChange(open_cmd)
 endfunction
 
 function! PythonHeaderSourceChange(filepath, open_cmd)
-python << EOF
+python3 << EOF
 import os
 import vim
 
@@ -112,6 +111,20 @@ nnoremap <leader>hss :call PythonHeaderSourceChange(expand("%:p"), "sp")<cr>
 nnoremap <leader>hsv :call PythonHeaderSourceChange(expand("%:p"), "vs")<cr>
 nnoremap <leader>hst :call PythonHeaderSourceChange(expand("%:p"), "tabnew")<cr>
 
+function! OpenDirectory(open_cmd)
+python3 << EOF
+import os
+import vim
+vim.command("{} {}".format(vim.eval("a:open_cmd"), os.path.dirname(vim.eval('expand("%")'))))
+EOF
+endfunction
+
+nnoremap <leader>odc :call OpenDirectory("e")<cr>
+nnoremap <leader>ods :call OpenDirectory("sp")<cr>
+nnoremap <leader>odv :call OpenDirectory("vs")<cr>
+
+nnoremap <leader<>
+
 " Fuzzy search your project. Useful, but I never remember to use it, so I
 " never do.
 function! FzyCommand(choice_command, vim_command)
@@ -136,6 +149,12 @@ nnoremap <leader>ffv :call FzyCommand("find -type f", ":vs")<cr>
 nnoremap <leader>ffs :call FzyCommand("find -type f", ":sp")<cr>
 nnoremap <leader>fft :call FzyCommand("find -type f", ":tabnew")<cr>
 
+function! OpenTerminal()
+  exec ":sp | terminal"
+endfunction
+
+nnoremap <leader>t :call OpenTerminal()<cr><C-W><S-J>
+
 " ERRORS
 "-------------------------------------------------------------------------------
 
@@ -149,4 +168,4 @@ nnoremap <leader>c :cclose<cr>
 " clang-format
 "-------------------------------------------------------------------------------
 
-map <C-I> :pyf ~/.vim/clang-format.py<cr>
+map <C-I> :py3file ~/.vim/clang-format.py<cr>

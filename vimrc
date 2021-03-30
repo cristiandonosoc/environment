@@ -19,13 +19,22 @@ set secure
 " Do not make VIM compatible with Vi (not sure what this does actually...)
 set nocompatible
 
-" Command line abbreviations for the most error in existence
+" Command line abbreviations for the most annoying errors in existence
 cnoreabbrev W w
 cnoreabbrev Wa wa
 cnoreabbrev WA wa
 cnoreabbrev Wqa wqa
 cnoreabbrev WQa wqa
 cnoreabbrev WQA wqa
+cnoreabbrev E e
+cnoreabbrev Tabnew tabnew
+cnoreabbrev Vs vs
+cnoreabbrev VS vs
+cnoreabbrev Sp sp
+cnoreabbrev SP sp
+
+" terminal mode escape
+:tnoremap <Esc> <C-\><C-n>
 
 " Plugins && indentation per filetype
 filetype on
@@ -185,6 +194,7 @@ set softtabstop=2   " Tab Extension When Editing
 set expandtab       " Tabs are spaces
 set tabstop=2       " Amount of spaces in a tabSpaces in a tab
 set shiftwidth=2    " The >> and << space value. Auto-indent works this way
+set tabstop=2 shiftwidth=2 expandtab
 
 set autoindent      " Try to copy the indent of the previous line
 set smartindent     " Indent better with scopes
@@ -337,6 +347,17 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
 vnoremap <silent> <leader>j :call VisualSelection('f', '')<CR>
 vnoremap <silent> <leader>k :call VisualSelection('b', '')<CR>
+
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+	\ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " VUNDLE (PLUGINS)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
