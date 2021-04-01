@@ -22,3 +22,14 @@ You can use the following answer to run something whenever a new shell runs:
 
 https://stackoverflow.com/questions/17404165/how-to-run-a-command-on-command-prompt-startup-in-windows/17405182
 
+### Powerline fonts (for WSL)
+
+If you're back in your yolo WSL world, this is how you get your powerline fonts.
+
+1. Install them on **Windows**. Not the internal linux.
+
+Follow the instructions here: https://slmeng.medium.com/how-to-install-powerline-fonts-in-windows-b2eedecace58
+
+2. Change the font in the window
+
+

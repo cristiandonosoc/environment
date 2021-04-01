@@ -123,8 +123,6 @@ nnoremap <leader>odc :call OpenDirectory("e")<cr>
 nnoremap <leader>ods :call OpenDirectory("sp")<cr>
 nnoremap <leader>odv :call OpenDirectory("vs")<cr>
 
-nnoremap <leader<>
-
 " Fuzzy search your project. Useful, but I never remember to use it, so I
 " never do.
 function! FzyCommand(choice_command, vim_command)

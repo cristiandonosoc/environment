@@ -32,10 +32,11 @@ touch ~/.tmux.conf.local
 ## required re-compilation).
 
 # Install pip, for python 2 & 3. It's needed for the neovim-python integration.
+# Note that you might need to uninstall the current python installations.
 sudo apt-get install python-pip python3-pip -y
 sudo apt-get install neovim -y
-pip2 install --user neovim  # neovim python2 integration.
-pip3 install --user neovim  # neovim python3 integration.
+pip2 install --user pynvim # neovim python2 integration.
+pip3 install --user pynvim # neovim python3 integration.
 
 # Needed for neovim to load vimrc from the normal locations.
 mkdir -p ~/.config/nvim
@@ -91,18 +92,17 @@ sudo apt-get install fish -y
 curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
 
 # Install the config.fish
-# Fish has a directory for functions you can install. Lately I've resolved to
-# put the functions in the config.fish
-mkdir -p ~/.config/fish/functions
 ln -s `pwd`/config.fish ~/.config/fish/config.fish
 touch ~/.config/fish/config.fish.local
 
-# Install extra functions
+# Fish has a directory for functions you can install. Lately I've resolved to
+# put the functions in the config.fish
+mkdir -p ~/.config/fish/functions
 cp `pwd`/fish_functions/* ~/.config/fish/functions
 
 # Install the plugins (within fish).
-> fisher add oh-my-fish/theme-bobthefish
-> fisher add tuvistavie/fish-ssh-agent
+> fisher install oh-my-fish/theme-bobthefish
+> fisher install tuvistavie/fish-ssh-agent
 
 # I still start bash and them immediatelly run fish. This sometimes enables me
 # to set up some state from bash.
@@ -139,19 +139,22 @@ mkdir -p ~/.config/alacritty
 cp alacritty.yml ~/.config/alacritty # Copy... all machines are different.
 
 # Install powerline fonts.
+## -----------------------------------------------------------------------------
+
 # These are the fonts used by fish. Each OS installs them differently, but
 # linux is the hardest, so I've scripted it.
+sudo apt install fontconfig -y
 git clone https://github.com/powerline/fonts.git /tmp/fonts
 mkdir -p ~/.fonts
 cp /tmp/fonts/SourceCodePro/*.otf ~/.fonts/
 fc-cache -vf ~/.fonts
+
 ## EXTRAS
 ## -----------------------------------------------------------------------------
 # Extra utilities I find very useful day to day.
 # Ripgrep, replaces grep. It's much faster, but it's not that game-changer if
 # you don't grep HUGE codebases. In that cases, it really shines.
-curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.9.0/ripgrep_0.9.0_amd64.deb
-sudo dpkg -i ripgrep_0.9.0_amd64.deb
+sudo apt install ripgrep -y
 
 # fd
 # A human usable find. I've NEVER been able to remember find usage, but I never
