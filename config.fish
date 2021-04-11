@@ -18,12 +18,6 @@ set -g theme_display_git_dirty_verbose yes  # Amount
 # Prompt doesn't abbreviate paths
 set -g fish_prompt_pwd_dir_length 0
 
-# Source rust
-if test -e ~/.cargo/env
-  source ~/.cargo/env
-end
-
-
 # My own cd
 function __original_cd --description 'Change directory'
     set -l MAX_DIR_HIST 25
@@ -117,18 +111,4 @@ end
 # Source local config
 if test -e ~/.config/fish/config.fish.local
   source ~/.config/fish/config.fish.local
-end
-
-function run_zxdb
-  fx build
-  fx debug --no-agent -- --connect [(fx netaddr --fuchsia)]:5000 $argv
-end
-
-function run_agent
-  fx build
-  fx shell -- run fuchsia-pkg://fuchsia.com/debug_agent#meta/debug_agent.cmx --port 5000 $argv
-end
-
-function kill_agents
-  fx shell -- killall debug_agent.cmx
 end

@@ -32,4 +32,10 @@ Follow the instructions here: https://slmeng.medium.com/how-to-install-powerline
 
 2. Change the font in the window
 
+### Terminal
+
+Windows Terminal Preview seems to be the current winner.
+Install it normally and you can kick start using windows_terminal_preview_settings.json
+
+
 
