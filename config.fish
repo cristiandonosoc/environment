@@ -1,19 +1,26 @@
 # Paths
 set PATH ~/Local/bin $PATH
 set PATH ~/.cargo/bin $PATH
+set PATH /usr/local/go/bin $PATH
+set PATH $PATH /mnt/c/Program\ Files/go/bin
+set PATH $PATH /mnt/c/haven/tools
+set PATH $PATH /mnt/c/ProgramData/chocolatey/bin
+set PATH $PATH /mnt/c/tools/bin
+set PATH $PATH /mnt/c/src/bin/windows
 
 # aliases
 alias ll "ls -lha"
 alias grep "grep --color"
-alias vim "nvim"
+alias p4 "p4.exe"
+alias terraform "terraform.exe"
 set -g EDITOR nvim
 
 # Bob-the-fish
 set -g theme_newline_cursor yes             # 2 lines prompt
-set -g theme_display_git yes                # Display git status
-set -g theme_display_git_master_branch yes  # Display "master" name in git display
+#set -g theme_display_git yes                # Display git status
+#set -g theme_display_git_master_branch yes  # Display "master" name in git display
 set -g theme_show_exit_status yes           # Show status code of last command
-set -g theme_display_git_dirty_verbose yes  # Amount
+#set -g theme_display_git_dirty_verbose yes  # Amount
 
 # Prompt doesn't abbreviate paths
 set -g fish_prompt_pwd_dir_length 0
@@ -79,36 +86,12 @@ switch (uname)
     end
 end
 
-# Fuchsia
-
-function update
-  cd $FUCHSIA_DIR
-  git checkout JIRI_HEAD 2> /dev/null
-  jiri update
+function goto_haven
+  cd /mnt/c/haven
 end
 
-function rebuild
-  update && fx build -k 0 tools/fidlgen_llcpp_zircon:update && fx build && create_compdb
+function goto_p4
+  cd /mnt/c/src
 end
 
-function upload
-  jiri upload
-end
 
-function build
-  fx build
-  create_compdb
-end
-
-function create_compdb
-  cd $FUCHSIA_DIR
-  fx compdb
-  python ~/Source/environment/fuchsia_fix.py compile_commands.json
-  mv processed_db.json compile_commands.json
-  cd -
-end
-
-# Source local config
-if test -e ~/.config/fish/config.fish.local
-  source ~/.config/fish/config.fish.local
-end

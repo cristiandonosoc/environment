@@ -35,7 +35,11 @@ Plugin 'tpope/vim-sleuth'
 " Better info line.
 Plugin 'bling/vim-airline'
 
+" A bit Better tabs
 Plugin 'webdevel/tabulous'
+
+" Terraform support
+Plugin 'hashivim/vim-terraform'
 
 source ~/.vim/vundle_plugins.vim.local
 
