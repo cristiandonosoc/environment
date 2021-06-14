@@ -255,10 +255,10 @@ map <space> /
 map <silent> <leader><space> :nohlsearch<cr>
 
 " Smart way to move between windows CTRL-W j abbreviation
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>          " Open a new tab
@@ -371,4 +371,4 @@ autocmd FileChangedShellPost *
 
 source ~/.vim/vimrc_extras.vim
 
-
+colorscheme oxeded
