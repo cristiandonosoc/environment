@@ -163,7 +163,25 @@ nnoremap <leader>N :clast<cr>
 nnoremap <leader>o :copen<cr>
 nnoremap <leader>c :cclose<cr>
 
-" clang-format
+" format
 "-------------------------------------------------------------------------------
 
-map <C-I> :py3file ~/.vim/clang-format.py<cr>
+function! PythonDoFormat(filepath)
+python3 << EOF
+import os
+
+filepath = vim.eval("a:filepath")
+filename, ext = os.path.splitext(filepath)
+if ext == ".go":
+	vim.command("!gofmt.exe -w %")
+elif ext == ".tf":
+	vim.command("!terraform.exe fmt %")
+elif ext in [".h", ".hpp", ".hxx", ".cc", ".cpp", ".cxx"]:
+	vim.command("!clang-format.exe -Werror -i --style=file %")
+elif ext in [".rs"]:
+	vim.command("!rustfmt.exe %")
+EOF
+endfunction
+
+nnoremap <C-I> :call PythonDoFormat(expand("%:p"))<cr>
+"nnoremap <C-I> :!gofmt.exe -w %<cr>

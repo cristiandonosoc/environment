@@ -151,9 +151,20 @@ else
   endtry
 endif
 
-" Use Unix as the standard file type
-set fileformats=unix,dos,mac
-set fileformat=unix
+if !exists("g:os")
+	if has("win64") || has("win32") || has("win16")
+		let g:os = "windows"
+	else
+		let g:os = "unix"
+	endif
+endif
+
+set fileformats=unix,dos,macs
+if g:os == "windows"
+	set fileformat=dos
+else
+	set fileformat=unix
+endif
 
 " Always show the status line
 set laststatus=2
@@ -199,12 +210,12 @@ endif
 set expandtab
 set smarttab
 
-set tabstop=2       " Amount of spaces in a tabSpaces in a tab
+"set tabstop=2       " Amount of spaces in a tabSpaces in a tab
 set softtabstop=2   " Tab Extension When Editing
-set expandtab       " Tabs are spaces
+"set expandtab       " Tabs are spaces
 set tabstop=2       " Amount of spaces in a tabSpaces in a tab
 set shiftwidth=2    " The >> and << space value. Auto-indent works this way
-set tabstop=2 shiftwidth=2 expandtab
+"set tabstop=2 shiftwidth=2 expandtab
 
 set autoindent      " Try to copy the indent of the previous line
 set smartindent     " Indent better with scopes
@@ -369,6 +380,19 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
+" " Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
 source ~/.vim/vimrc_extras.vim
 
 colorscheme oxeded
+let g:NERDTreeShowHidden=1
