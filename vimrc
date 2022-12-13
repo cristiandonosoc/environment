@@ -99,7 +99,7 @@ set backspace=start,eol,indent
 " Highlight the search results
 " Incremental matches as search goes on (*very* annoying if off)
 " Magic Special characters as * don't get escaped
-set ignorecase
+" set ignorecase
 set smartcase
 set hlsearch
 set incsearch
@@ -151,20 +151,10 @@ else
   endtry
 endif
 
-if !exists("g:os")
-	if has("win64") || has("win32") || has("win16")
-		let g:os = "windows"
-	else
-		let g:os = "unix"
-	endif
-endif
-
-set fileformats=unix,dos,macs
-if g:os == "windows"
-	set fileformat=dos
-else
-	set fileformat=unix
-endif
+" Use Unix as the standard file type
+" set fileformats=unix,dos,mac
+" set fileformat=unix
+set fileformat=unix
 
 " Always show the status line
 set laststatus=2
@@ -207,15 +197,12 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Be smart about tabs... and use spaces obviously
-set expandtab
 set smarttab
 
-"set tabstop=2       " Amount of spaces in a tabSpaces in a tab
 set softtabstop=2   " Tab Extension When Editing
 "set expandtab       " Tabs are spaces
 set tabstop=2       " Amount of spaces in a tabSpaces in a tab
 set shiftwidth=2    " The >> and << space value. Auto-indent works this way
-"set tabstop=2 shiftwidth=2 expandtab
 
 set autoindent      " Try to copy the indent of the previous line
 set smartindent     " Indent better with scopes
@@ -314,6 +301,11 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite * :call DeleteTrailingWS()
 
+"augroup Go
+"	autocmd!
+"	autocmd BufUnload *.go !gofmt.exe -w <afile>
+"augroup END
+
 " ERRORS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -396,3 +388,8 @@ source ~/.vim/vimrc_extras.vim
 
 colorscheme oxeded
 let g:NERDTreeShowHidden=1
+
+
+autocmd FileType javascript setlocal shiftwidth=2 expandtab tabstop=2
+autocmd FileType typescript setlocal shiftwidth=2 expandtab tabstop=2
+au BufRead,BufNewFile *.Jenkinsfile setfiletype groovy

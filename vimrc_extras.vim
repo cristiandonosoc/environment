@@ -42,32 +42,45 @@ nnoremap <leader>gis :call YcmGoToWrapper("GoToInclude", "sp")<cr>
 nnoremap <leader>giv :call YcmGoToWrapper("GoToInclude", "vs")<cr>
 nnoremap <leader>git :call YcmGoToWrapper("GoToInclude", "tabnew")<cr>
 
+function! PythonOpenSwarmFile(filename, line)
+python3 << EOF
+import os
+import subprocess
+
+# Find the monorepo.
+def FindMonorepoDir(filename):
+	last = filename
+	d = filename
+	while True:
+		# Go over searching the parent. If we found the same directory twice in a row, it means that
+		# we are at the file system root.
+		d = os.path.dirname(d)
+		if d == last:
+			raise("MONOREPO FILE NOT FOUND")
+		last = d
+
+		# Search directory for Build.cs file.
+		for f in os.listdir(d):
+			basename = os.path.basename(f)
+			if "MONOREPO" in basename:
+				return d
+
+def OpenSwarmFile(filename, line):
+	root = FindMonorepoDir(filename)
+	rel = os.path.relpath(filename, root)
+
+
+	url = "https://swarm.havenstudios.com/files/hvn/{}#{}".format(rel, line)
+	os.system("start "+url)
+
+OpenSwarmFile(vim.eval("a:filename"), vim.eval("a:line"))
+EOF
+endfunction
+
+nnoremap <leader>u :call PythonOpenSwarmFile(expand("%:p"), line('.'))<cr>
+
 " C++
 "-------------------------------------------------------------------------------
-
-" Swap between .h/.cc
-" Can be improved to support .cpp, .hpp, .c ... etc.
-function! HeaderSourceChange(open_cmd)
-  let a:path = expand("%:r")
-  let a:extension = expand("%:e")
-
-  " We change h/cc
-  let a:new_extension = ""
-  if a:extension == "h"
-    let a:new_extension = "cc"
-  elseif a:extension == "cc"
-    let a:new_extension = "h"
-  endif
-
-  if a:new_extension == ""
-    return
-  endif
-
-  let a:new_filename = a:path . "." . a:new_extension
-
-  " We open the file
-  exec a:open_cmd . ' ' . a:new_filename
-endfunction
 
 function! PythonHeaderSourceChange(filepath, open_cmd)
 python3 << EOF
@@ -77,35 +90,88 @@ import vim
 h_extensions = ["h", "hpp"]
 c_extensions = ["cc", "cpp", "c"]
 
-def DoHeaderChange(filepath, open_cmd):
-  filename, fileext = os.path.splitext(filepath)
-  extension = fileext[1:]
 
-  new_extensions = []
-  if extension in h_extensions:
-    new_extensions = c_extensions
-  elif extension in c_extensions:
-    new_extensions = h_extensions
+def ChangeExtension(filepath):
+	filename, fileext = os.path.splitext(filepath)
+	extension = fileext[1:]
 
-  # Search for a match.
-  for ext in new_extensions:
-    path = os.path.abspath("{}.{}".format(filename, ext))
-    if not os.path.exists(path):
-      continue
+	new_extensions = []
+	if extension in h_extensions:
+		new_extensions = c_extensions
+	elif extension in c_extensions:
+		new_extensions = h_extensions
 
-    vim.command("{} {}".format(open_cmd, path))
-    return
+	# Search for a match.
+	for ext in new_extensions:
+		path = os.path.abspath("{}.{}".format(filename, ext))
+		if os.path.exists(path):
+			return path, True
 
-  # If we didn't a header, simply change to the other new extension.
-  # This is normally we wanting to open a new .cc from a new header file.
-  new_path = os.path.abspath("{}.{}".format(filename, new_extensions[0]))
-  vim.command("{} {}".format(open_cmd, new_path))
+	return "", False
 
-DoHeaderChange(vim.eval("a:filepath"), vim.eval("a:open_cmd"))
+def SearchForUnrealModuleHeader(filepath):
+	# See if this is a module.
+	if (not "Public" in filepath) and (not "Private" in filepath):
+		return "", False
+
+	last = filepath
+	d = filepath
+	while True:
+		# Go over searching the parent. If we found the same directory twice in a row, it means that
+		# we are at the file system root.
+		d = os.path.dirname(d)
+		if d == last:
+			return "", False
+		last = d
+
+		base = os.path.basename(d)
+		if base == "Public":
+			other = "Private"
+		elif base == "Private":
+			other = "Public"
+		else:
+			continue
+
+		# Find the path where the other headern should be.
+		rel = os.path.relpath(filepath, d)
+		target = os.path.join(os.path.dirname(d), other, rel)
+
+		# Try to find the other header.
+		other, ok = ChangeExtension(target)
+		if not ok:
+			continue
+		return other, True
+
+def DoHeaderChange(open_cmd, filepath):
+	# First try to see if we found an Unreal header.
+	newpath, ok = SearchForUnrealModuleHeader(filepath)
+	if ok:
+		vim.command("{} {}".format(open_cmd, newpath))
+		return
+
+	newpath, ok = ChangeExtension(filepath)
+	if ok:
+		vim.command("{} {}".format(open_cmd, newpath))
+		return
+
+	# If we didn't find a header, simply change to the other new extension.
+	# This is normally we wanting to open a new .cc from a new header file.
+	filename, fileext = os.path.splitext(filepath)
+	extension = fileext[1:]
+
+	new_extensions = []
+	if extension in h_extensions:
+		new_extensions = c_extensions
+	elif extension in c_extensions:
+		new_extensions = h_extensions
+
+	new_path = os.path.abspath("{}.{}".format(filename, new_extensions[0]))
+	vim.command("{} {}".format(open_cmd, new_path))
+
+DoHeaderChange(vim.eval("a:open_cmd"), vim.eval("a:filepath"))
 EOF
 endfunction
 
-"nnoremap <leader>hsc :call HeaderSourceChange("e")<cr>
 nnoremap <leader>hsc :call PythonHeaderSourceChange(expand("%:p"), "e")<cr>
 nnoremap <leader>hss :call PythonHeaderSourceChange(expand("%:p"), "sp")<cr>
 nnoremap <leader>hsv :call PythonHeaderSourceChange(expand("%:p"), "vs")<cr>
@@ -153,6 +219,11 @@ endfunction
 
 nnoremap <leader>t :call OpenTerminal()<cr><C-W><S-J>
 
+" Workaround on wqa
+command Z w | qa
+cabbrev wqa Z
+
+
 " ERRORS
 "-------------------------------------------------------------------------------
 
@@ -183,5 +254,13 @@ elif ext in [".rs"]:
 EOF
 endfunction
 
-nnoremap <C-I> :call PythonDoFormat(expand("%:p"))<cr>
-"nnoremap <C-I> :!gofmt.exe -w %<cr>
+nnoremap <silent><TAB> :call PythonDoFormat(expand("%:p"))<cr>
+
+augroup filetypedetect
+		autocmd BufNew,BufNewFile,BufRead *.cpp,*.h :set ff=dos
+    autocmd BufNew,BufNewFile,BufRead *.txt,*.text,*.md,*.markdown :setfiletype markdown
+    autocmd BufNew,BufNewFile,BufRead *.Jenkinsfile :setfiletype groovy
+    autocmd BufNew,BufNewFile,BufRead *.go,*.tf,*.rs :set ff=unix
+augroup END
+
+

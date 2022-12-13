@@ -30,7 +30,7 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'djoshea/vim-autoread'
 
 " Automatic tab/space management.
-Plugin 'tpope/vim-sleuth'
+" Plugin 'tpope/vim-sleuth'
 
 " Better info line.
 Plugin 'bling/vim-airline'
@@ -40,6 +40,9 @@ Plugin 'webdevel/tabulous'
 
 " Terraform support
 Plugin 'hashivim/vim-terraform'
+
+" Better C++ highlighting.
+Plugin 'bfrg/vim-cpp-modern'
 
 source ~/.vim/vundle_plugins.vim.local
 

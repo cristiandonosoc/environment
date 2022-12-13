@@ -112,18 +112,3 @@ if __name__ == "__main__":
         json.dump(entries, f, indent=2)
 
     print("Took {} seconds.", end - start)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
