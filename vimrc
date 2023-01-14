@@ -1,12 +1,68 @@
-set runtimepath=$VIMRUNTIME,~/.vim/after
+" This is the common vimrc that is common to all platforms.
+" Specific configurations for each platform will be tried to be loaded from
+" the name ".vimrc.${PLATFORM}" (eg. .vimrc.windows, .vimrc.linux, etc.).
+
+set runtimepath=$VIMRUNTIME,~/.nvim,~/.nvim/after,~/.nvim/autoload
+
+function! s:loadExtraVimFileIfExists(path)
+	if !empty(glob(a:path))
+		" TODO(cdc): Need this concat garbage for some reason...
+		source "".glob(a:path)
+	else
+		echoerr "vimfile doesn't exist: ".a:path
+	endif
+endfunction
 
 " VUNDLE (PLUGINS)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vim/vundle_plugins.vim
 
-" SOURCE LOCAL CHANGES
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vimrc.local
+set rtp+=~/.nvim/autoload
+
+call plug#begin('$HOME/.nvim/plugged')
+
+" Plugin handler
+" Plugin 'VundleVim/Vundle.vim'
+
+" Better filesystem management
+Plug 'scrooloose/nerdtree'
+
+" Solarized colorscheme
+Plug 'altercation/vim-colors-solarized'
+
+" Easier comments
+Plug 'tpope/vim-commentary'
+
+" Autocomplete with C/C++ semantics
+Plug 'Valloric/YouCompleteMe'
+
+" " Easy scratch pad
+" Plug 'mtth/scratch.vim'
+
+" OpenGL syntax
+Plug 'tikhomirov/vim-glsl'
+
+" Many colorschemes!
+Plug 'flazz/vim-colorschemes'
+
+" Automatically reload externally modified files.
+Plug 'djoshea/vim-autoread'
+
+" Automatic tab/space management.
+" Plug 'tpope/vim-sleuth'
+
+" Better info line.
+Plug 'bling/vim-airline'
+
+" A bit Better tabs
+Plug 'webdevel/tabulous'
+
+" Terraform support
+Plug 'hashivim/vim-terraform'
+
+" Better C++ highlighting.
+Plug 'bfrg/vim-cpp-modern'
+
+call plug#end()
 
 " GENERIC STARTUP & UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -173,12 +229,8 @@ set writebackup
 " This requires these folders to be created. See the install script.
 set swapfile
 let swapfolder = 0
-if isdirectory(expand('~/.vim/cache'))
-  let swapfolder = '~/.vim/cache'
-endif
-" Windows
-if isdirectory(expand('~/vimfiles/cache'))
-  let swapfolder = '~/vimfiles/cache'
+if isdirectory(expand('~/.nvim/cache'))
+  let swapfolder = '~/.nvim/cache'
 endif
 
 " Where to put swap, backup and undo files
@@ -319,7 +371,7 @@ map <leader>n :cn<cr>       " Next error
 
 set spelllang=es,en                         " Spelling languages
 set spellsuggest=10                         " Number of spelling suggestions
-"set spellfile=~/.vim/spell/mine.utf-8.add   " Spell file for additions
+"set spellfile=~/.nvim/spell/mine.utf-8.add   " Spell file for additions
 
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
@@ -384,7 +436,6 @@ nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 
-source ~/.vim/vimrc_extras.vim
 
 colorscheme oxeded
 let g:NERDTreeShowHidden=1
@@ -393,3 +444,14 @@ let g:NERDTreeShowHidden=1
 autocmd FileType javascript setlocal shiftwidth=2 expandtab tabstop=2
 autocmd FileType typescript setlocal shiftwidth=2 expandtab tabstop=2
 au BufRead,BufNewFile *.Jenkinsfile setfiletype groovy
+
+" PLATFORM SPECIFIC CONFIGURATIONS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+call s:loadExtraVimFileIfExists("~/.vimrc.windows")
+" call s:loadExtraVimFileIfExists("~/.vimrc.linux")
+
+" EXTRAS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+call s:loadExtraVimFileIfExists("~/.vimrc.extras")
