@@ -2,20 +2,22 @@
 " Specific configurations for each platform will be tried to be loaded from
 " the name ".vimrc.${PLATFORM}" (eg. .vimrc.windows, .vimrc.linux, etc.).
 
+" , is my leader
+let g:mapleader = ","
+
 set runtimepath=$VIMRUNTIME,~/.nvim,~/.nvim/after,~/.nvim/autoload
 
 function! s:loadExtraVimFileIfExists(path)
-	if !empty(glob(a:path))
-		" TODO(cdc): Need this concat garbage for some reason...
-		source "".glob(a:path)
-	else
-		echoerr "vimfile doesn't exist: ".a:path
-	endif
+if !empty(glob(a:path))
+	" TODO(cdc): Need this concat garbage for some reason...
+	source "".glob(a:path)
+else
+	echoerr "vimfile doesn't exist: ".a:path
+endif
 endfunction
 
 " VUNDLE (PLUGINS)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 set rtp+=~/.nvim/autoload
 
 call plug#begin('$HOME/.nvim/plugged')
@@ -33,7 +35,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-commentary'
 
 " Autocomplete with C/C++ semantics
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 
 " " Easy scratch pad
 " Plug 'mtth/scratch.vim'
@@ -66,26 +68,25 @@ call plug#end()
 
 " GENERIC STARTUP & UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " MOST IMPORTANT SETTING OF THEM ALL
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
+	 \ if line("'\"") > 0 && line("'\"") <= line("$") |
+	 \   exe "normal! g`\"" |
+	 \ endif
 
 " Disable the god awful Ex mode.
 map Q <Nop>
 
-" Load local .vimrc found in $PWD
-" Secure means that loaded .vimrc through exrc cannot run autocommands
+" Load local .vimrc found in $PWD.
+" Secure means that loaded .vimrc through exrc cannot run autocommands.
 set exrc
 set secure
 
-" Do not make VIM compatible with Vi (not sure what this does actually...)
+" Do not make VIM compatible with Vi (not sure what this does actually...).
 set nocompatible
 
-" Command line abbreviations for the most annoying errors in existence
+" Command line abbreviations for the most annoying errors in existence.
 cnoreabbrev W w
 cnoreabbrev Wa wa
 cnoreabbrev WA wa
@@ -99,8 +100,22 @@ cnoreabbrev VS vs
 cnoreabbrev Sp sp
 cnoreabbrev SP sp
 
+" TERMINAL SETUP
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " terminal mode escape
-:tnoremap <Esc> <C-\><C-n>
+" This permits escape to go out of writing in the terminal.
+tnoremap <Esc> <C-\><C-n>
+
+" Open terminal in a horizontal split.
+function! OpenTerminal()
+  exec ":sp | terminal"
+endfunction
+
+nnoremap <leader>t :call OpenTerminal()<cr><C-W><S-J>
+
+" FILETYPE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Plugins && indentation per filetype
 filetype on
@@ -109,9 +124,6 @@ filetype indent on
 
 " Automatically reload a file when outside detection has been detected
 set autoread
-
-" , is my leader
-let g:mapleader = ","
 
 " Setup mouse
 try

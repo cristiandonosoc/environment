@@ -21,6 +21,7 @@ function Declare-Replacement {
 	Write-Host "- $From -> $To"
 }
 
+# Make-Dir is a helper function that creates a directory and logs some nice stuff.
 function Make-Dir {
 	param(
 		[parameter(Mandatory)]
@@ -34,6 +35,7 @@ function Make-Dir {
 	return Resolve-Path -Path $Dir
 }
 
+# Copy-File is a helper function that creates a directory and logs some nice stuff.
 function Copy-File {
 	param(
 		[parameter(Mandatory)]
@@ -53,6 +55,9 @@ function Copy-File {
 Write-Host "Actions:"
 Write-Host ""
 
+# Configure git to use the credential manager.
+git config --global credential.helper manager-core
+
 # Install Python 3.9
 Write-Host "INSTALL Python 3.9"
 winget install -e --id Python.Python.3.9
@@ -65,7 +70,7 @@ $nvimInitDir = Make-Dir -Dir "$HOME\AppData\Local\nvim"
 $nvimInitPath = Copy-File -From "$PSScriptRoot\..\nvim.init.vim" -To "$nvimInitDir\init.vim"
 
 # Create the directories used by our vim setup to track swap, undo and other runtime metadata.
-Make-Dir -Dir "$HOME\.nlvim\cache\swap" | Out-Null
+Make-Dir -Dir "$HOME\.nvim\cache\swap" | Out-Null
 Make-Dir -Dir "$HOME\.nvim\cache\backup" | Out-Null
 Make-Dir -Dir "$HOME\.nvim\cache\undo" | Out-Null
 
