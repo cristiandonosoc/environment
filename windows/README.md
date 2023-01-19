@@ -31,6 +31,7 @@ Enjoy!
 	- TODO(cdc): You might need to re-run the script because pip might not be loaded
 	             into PATH since it's been installed in the same environment.
 3. Within nvim, run "PlugInstall"
+4. Add "C:\cdc\bin" and "C:\cdc\bin\coreutils" to PATH (via dialog).
 
 ### YouCompleteMe
 
@@ -44,6 +45,7 @@ winget install -e --id Kitware.CMake
 ```
 
 2. Install Go
+3. Install Rust
 
 4. Compile YouCompleteMe
 ```
