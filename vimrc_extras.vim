@@ -181,7 +181,7 @@ function! OpenDirectory(open_cmd)
 python3 << EOF
 import os
 import vim
-vim.command("{} {}".format(vim.eval("a:open_cmd"), os.path.dirname(vim.eval('expand("%")'))))
+vim.command("{} {}".format(vim.eval("a:open_cmd"), os.path.dirname(vim.eval('expand("%:p")'))))
 EOF
 endfunction
 

@@ -1,70 +1,34 @@
+# Always stop on first error.
+$ErrorActionPreference = "Stop"
+
+# Load the helper functions.
+. "$PSScriptRoot\helper_functions.ps1"
+
 Write-Host "Hello $env:UserName, your home dir is $HOME"
 Write-Host "Script location: $PSScriptRoot"
 
-function Declare-Replacement {
-	param(
-		[parameter(Mandatory)]
-		[string]$From,
-		[parameter(Mandatory)]
-		[string]$To
-	)
-
-	# We make the paths absolute.
-	$From = Resolve-Path -Path $From
-
-	# Verify that the from location exists.
-	$fromCheck = Test-Path -Path $From -PathType leaf
-	if ($fromCheck -eq $false) {
-		throw "From path $From does not exist"
-	}
-
-	Write-Host "- $From -> $To"
-}
-
-# Make-Dir is a helper function that creates a directory and logs some nice stuff.
-function Make-Dir {
-	param(
-		[parameter(Mandatory)]
-		[string]$Dir
-	)
-
-	Write-Host "MKDIR $Dir"
-	New-Item -Path $Dir -ItemType directory -Force | Out-Null
-	Write-Host "-> DONE"
-
-	return Resolve-Path -Path $Dir
-}
-
-# Copy-File is a helper function that creates a directory and logs some nice stuff.
-function Copy-File {
-	param(
-		[parameter(Mandatory)]
-		[string]$From,
-		[parameter(Mandatory)]
-		[string]$To
-	)
-
-	$From = Resolve-Path -Path $From
-	Write-Host "COPY $From -> $To"
-	Copy-Item $From -Destination $To
-	Write-Host "-> DONE"
-
-	return Resolve-Path -Path $To
-}
-
-Write-Host "Actions:"
-Write-Host ""
-
+Write-Host "---------------------------------------------------------------------------------------"
 
 # Configure git to use the credential manager.
+Write-Host "GIT Setting global configs"
 git config --global credential.helper manager-core
 
-# Install Python 3.9
-Write-Host "INSTALL Python 3.9"
-winget install -e --id Python.Python.3.9
+# Configure nvim-qt to be the editor so that we can invoke it from cli nvim.
+git config --global core.editor "nvim-qt"
 
-# Install neovim pip module (might require re-bash)
-pip install --user pynvim
+if ($(winget list "python 3.9" | Select-String "No installed package found")) {
+	Write-Host "INSTALL Python 3.9"
+	winget install -e --id Python.Python.3.9
+} else {
+	Write-Host "PYTHON: v3.9 already installed."
+}
+
+# Check for pynvim module.
+if ($(pip list | Select-String "pynvim")) {
+	Write-Host "NEOVIM PYTHON MODULE: already installed."
+} else {
+	pip install --user pynvim
+}
 
 # Install the nvim config.
 $nvimInitDir = Make-Dir -Dir "$HOME\AppData\Local\nvim"
@@ -82,11 +46,12 @@ Copy-File -From "$PSScriptRoot\windows_vimrc" -To "$HOME\.vimrc.windows" | Out-N
 
 # Download vim-plug
 $plugPath = "$HOME/.nvim/autoload/plug.vim"
-if ($(Test-Path -Path $plugPath) -eq $false) {
+if (Test-Path -Path $plugPath) {
+	Write-Host "VIMPLUG: Already exists. Skipping download."
+} else {
 	Write-Host "DOWNLOAD plug.vim"
 	iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim |`
     ni $HOME/.nvim/autoload/plug.vim -Force
-	Write-Host "-> DONE"
 }
 
 # Setup coreutils wrappers
@@ -108,6 +73,9 @@ Make-Dir -Dir $bindir | Out-Null
 Make-Dir -Dir "$bindir\coreutils" | Out-Null
 
 # Copy over the coreutils wrappers.
+Write-Host "INSTALL coretutils (if needed)."
 $coreutilsElements | ForEach-Object {
-	Copy-File -From "$PSScriptRoot\coreutil_wrapper.bat" -To "$bindir\coreutils\$PSItem.bat" | Out-Null
+	$From = "$PSScriptRoot\coreutil_wrapper.bat"
+	$To = "$bindir\coreutils\$PSItem.bat"
+	Copy-File -From $From -To $To -Silent $true | Out-Null
 }

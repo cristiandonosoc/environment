@@ -9,10 +9,9 @@ set runtimepath=$VIMRUNTIME,~/.nvim,~/.nvim/after,~/.nvim/autoload
 
 function! s:loadExtraVimFileIfExists(path)
 if !empty(glob(a:path))
-	" TODO(cdc): Need this concat garbage for some reason...
-	source "".glob(a:path)
+	execute "source " . expand(a:path)
 else
-	echoerr "vimfile doesn't exist: ".a:path
+	echoerr "vimfile doesn't exist: " . a:path
 endif
 endfunction
 
