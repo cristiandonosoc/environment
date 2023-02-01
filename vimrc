@@ -34,10 +34,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-commentary'
 
 " Autocomplete with C/C++ semantics
-" Plug 'Valloric/YouCompleteMe'
-
-" " Easy scratch pad
-" Plug 'mtth/scratch.vim'
+Plug 'Valloric/YouCompleteMe'
 
 " OpenGL syntax
 Plug 'tikhomirov/vim-glsl'
@@ -47,9 +44,6 @@ Plug 'flazz/vim-colorschemes'
 
 " Automatically reload externally modified files.
 Plug 'djoshea/vim-autoread'
-
-" Automatic tab/space management.
-" Plug 'tpope/vim-sleuth'
 
 " Better info line.
 Plug 'bling/vim-airline'
@@ -62,6 +56,16 @@ Plug 'hashivim/vim-terraform'
 
 " Better C++ highlighting.
 Plug 'bfrg/vim-cpp-modern'
+
+" LSP Config.
+Plug 'neovim/nvim-lspconfig'
+
+" Rust tools.
+Plug 'simrat39/rust-tools.nvim'
+
+" Inlay hints.
+Plug 'simrat39/inlay-hints.nvim'
+
 
 call plug#end()
 
@@ -262,9 +266,10 @@ endif
 " Be smart about tabs... and use spaces obviously
 set smarttab
 
-set softtabstop=2   " Tab Extension When Editing
-"set expandtab       " Tabs are spaces
 set tabstop=2       " Amount of spaces in a tabSpaces in a tab
+set softtabstop=2   " Tab Extension When Editing
+set noexpandtab
+"set expandtab       " Tabs are spaces
 set shiftwidth=2    " The >> and << space value. Auto-indent works this way
 
 set autoindent      " Try to copy the indent of the previous line

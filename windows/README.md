@@ -46,8 +46,14 @@ winget install -e --id Kitware.CMake
 
 2. Install Go
 3. Install Rust
-
 4. Compile YouCompleteMe
 ```
 cd %USERPROFILE%\.nvim\plugged\YouCompleteMe
 ```
+
+## Rust(-analyzer)
+
+Download the latest Rust-analyzer from https://github.com/rust-lang/rust-analyzer and put in
+C:\cdc\bin
+
+That will enable LspConfig
