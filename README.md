@@ -2,12 +2,12 @@
 
 My environment setup that I use to standarize every machine I work on.
 
-I used to have it automated but now I just follow linux_install.sh and see
-the commands I need to run.
+Follow each particular OS (eg. windows) for the install instructions for that OS.
 
-## Things I use
+Currently supported:
+- Windows
 
-- tmux
-- neovim
-- fish
-- alacritty
+Some old setup:
+- Linux
+- OSX
+

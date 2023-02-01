@@ -1,1 +1,0 @@
-- Move functions to config.local

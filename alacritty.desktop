@@ -1,8 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Version=1.0
-Name=Allacrity
-GenericName=Launch Alacritty
-Type=Application
-Exec=/usr/local/google/home/donosoc/Local/bin/alacritty
-Categories=System;

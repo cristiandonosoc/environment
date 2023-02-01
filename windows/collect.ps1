@@ -12,7 +12,7 @@ Write-Host "Script location: $PSScriptRoot"
 
 Write-Host "---------------------------------------------------------------------------------------"
 
-Copy-File -From "$HOME\AppData\Local\nvim\init.lua" -To "$PSScriptRoot\..\nvim.init.lua" | Out-Null
-Copy-File -From "$HOME\.vimrc" -To "$PSScriptRoot\..\vimrc" | Out-Null
-Copy-File -From "$HOME\.vimrc.extras" -To "$PSScriptRoot\..\vimrc_extras.vim" | Out-Null
+Copy-File -From "$HOME\AppData\Local\nvim\init.lua" -To "$PSScriptRoot\..\common\nvim.init.lua" | Out-Null
+Copy-File -From "$HOME\.vimrc" -To "$PSScriptRoot\..\common\vimrc" | Out-Null
+Copy-File -From "$HOME\.vimrc.extras" -To "$PSScriptRoot\..\common\vimrc_extras.vim" | Out-Null
 Copy-File -From "$HOME\.vimrc.windows" -To "$PSScriptRoot\windows_vimrc" | Out-Null

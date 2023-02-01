@@ -32,7 +32,7 @@ if ($(pip list | Select-String "pynvim")) {
 
 # Install the nvim config.
 $nvimInitDir = Make-Dir -Dir "$HOME\AppData\Local\nvim"
-$nvimInitPath = Copy-File -From "$PSScriptRoot\..\nvim.init.vim" -To "$nvimInitDir\init.vim"
+$nvimInitPath = Copy-File -From "$PSScriptRoot\..\common\nvim.init.lua" -To "$nvimInitDir\init.lua"
 
 # Create the directories used by our vim setup to track swap, undo and other runtime metadata.
 Make-Dir -Dir "$HOME\.nvim\cache\swap" | Out-Null
@@ -40,8 +40,8 @@ Make-Dir -Dir "$HOME\.nvim\cache\backup" | Out-Null
 Make-Dir -Dir "$HOME\.nvim\cache\undo" | Out-Null
 
 # Copy our vimrcs.
-Copy-File -From "$PSScriptRoot\..\vimrc" -To "$HOME\.vimrc" | Out-Null
-Copy-File -From "$PSScriptRoot\..\vimrc_extras.vim" -To "$HOME\.vimrc.extras" | Out-Null
+Copy-File -From "$PSScriptRoot\..\common\vimrc" -To "$HOME\.vimrc" | Out-Null
+Copy-File -From "$PSScriptRoot\..\common\vimrc_extras.vim" -To "$HOME\.vimrc.extras" | Out-Null
 Copy-File -From "$PSScriptRoot\windows_vimrc" -To "$HOME\.vimrc.windows" | Out-Null
 
 # Download vim-plug
