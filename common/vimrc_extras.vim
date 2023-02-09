@@ -251,6 +251,8 @@ elif ext in [".h", ".hpp", ".hxx", ".cc", ".cpp", ".cxx"]:
 	vim.command("!clang-format.exe -Werror -i --style=file %")
 elif ext in [".rs"]:
 	vim.command("!rustfmt.exe %")
+elif ext in [".py"]:
+	vim.command("!python -m black %")
 EOF
 endfunction
 
