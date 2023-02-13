@@ -1,25 +1,25 @@
 # This file contains utils that are common operations to be done with cpp files.
 
+import os
+
 _h_extensions = ["h", "hpp"]
 _cpp_extensions = ["cpp", "cc", "c"]
-
 
 # header_change tries to find the corresponding header/cpp file for a particular file.
 # It expects the extensions to be one of the defined in |_h_extensions| or |_cpp_extensions|.
 def header_change(filename, force=False):
     # First check if this is an unreal header that might need to be changed.
     result = _unreal_module_header_change(filename)
-    if len(result) > 0:
+    if result is not None:
         return result
 
     # Then we see if the matching file is in the same directory.
-    return _change_extension(filename, Force=force)
-
+    return _change_extension(filename, force=force)
 
 def _unreal_module_header_change(filepath):
     # See if this is a module.
     if (not "Public" in filepath) and (not "Private" in filepath):
-        return "", False
+        return None
 
     last = filepath
     d = filepath
@@ -71,3 +71,6 @@ def _change_extension(filepath, force=False):
     # If we forced, we just return the file with the new extension.
     ext = new_extensions[0]
     return os.path.abspath(f"{filename}.{ext}")
+
+
+

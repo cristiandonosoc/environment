@@ -16,3 +16,4 @@ Copy-File -From "$HOME\AppData\Local\nvim\init.lua" -To "$PSScriptRoot\..\common
 Copy-File -From "$HOME\.vimrc" -To "$PSScriptRoot\..\common\vimrc" | Out-Null
 Copy-File -From "$HOME\.vimrc.extras" -To "$PSScriptRoot\..\common\vimrc_extras.vim" | Out-Null
 Copy-File -From "$HOME\.vimrc.windows" -To "$PSScriptRoot\windows_vimrc" | Out-Null
+Copy-File -From "$HOME\.ideavimrc" -To "$PSScriptRoot\.ideavimrc" | Out-Null

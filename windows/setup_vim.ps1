@@ -43,6 +43,7 @@ Make-Dir -Dir "$HOME\.nvim\cache\undo" | Out-Null
 Copy-File -From "$PSScriptRoot\..\common\vimrc" -To "$HOME\.vimrc" | Out-Null
 Copy-File -From "$PSScriptRoot\..\common\vimrc_extras.vim" -To "$HOME\.vimrc.extras" | Out-Null
 Copy-File -From "$PSScriptRoot\windows_vimrc" -To "$HOME\.vimrc.windows" | Out-Null
+Copy-File -From "$PSScriptRoot\.ideavimrc" -To "$HOME\.ideavimrc" | Out-Null
 
 # Download vim-plug
 $plugPath = "$HOME/.nvim/autoload/plug.vim"

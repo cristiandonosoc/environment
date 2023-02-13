@@ -18,31 +18,36 @@ import platform
 import subprocess
 import json
 
-HELPERS_MODULE_PATH = os.environ.get("CDC_YCM_HELPERS_MODULE_PATH")
-if HELPERS_MODULE_PATH is None:
-    raise Exception("Set CDC_YCM_HELPERS_MODULE_PATH environment variable. See docs.")
-
-
-COMPILATION_DATABASE_PATH = os.environ.get("CDC_YCM_COMPILATION_DATABASE_PATH")
-if COMPILATION_DATABASE_PATH is None:
-    raise Exception("Set CDC_YCM_COMPILATION_DATABASE_PATH. See docs").
-
-# IMPORTANT: This file expects to be in //hvn/games/bleep
 THIS_DIR = os.path.abspath(os.path.dirname(__file__))
+
+# HELPERS_MODULE_PATH = os.environ.get("CDC_YCM_HELPERS_MODULE_PATH")
+# if HELPERS_MODULE_PATH is None:
+#     raise Exception("Set CDC_YCM_HELPERS_MODULE_PATH environment variable. See docs.")
+HELPERS_MODULE_PATH = "C:\cdc\environment\ycm"
+
+# COMPILATION_DATABASE_PATH = os.environ.get("CDC_YCM_COMPILATION_DATABASE_PATH")
+# if COMPILATION_DATABASE_PATH is None:
+#     raise Exception("Set CDC_YCM_COMPILATION_DATABASE_PATH. See docs").
+
+COMPILATION_DATABASE_PATH = os.path.join(THIS_DIR, "compile_commands.json")
+
+# # IMPORTANT: This file expects to be in //hvn/games/bleep
+# SOURCE_DIR = os.path.join(THIS_DIR, "Source")
+# if not os.path.exists(SOURCE_DIR):
+#     raise Exception("Please set SOURCE_DIR correctly")
+
 SOURCE_DIR = os.path.join(THIS_DIR, "Source")
-if not os.path.exists(SOURCE_DIR):
-    raise Exception("Please set SOURCE_DIR correctly")
 
 # We import the helper script.
 import sys
 found=False
 for path in sys.path:
-    if path == THIS_DIR:
+    if path == HELPERS_MODULE_PATH:
         found=True
         break
 
 if not found:
-    sys.path.append(os.path.join(THIS_DIR, "ycm"))
+    sys.path.append(HELPERS_MODULE_PATH)
 import compdb_helper
 
 

@@ -72,10 +72,13 @@ def load_compilation_data_for_file(
     with open(compdb_filename, "r") as file:
         data = json.load(file)
 
+    # If our file is a header, we try to find it to the corresponding cpp.
+    if os.path.splitext(target_filename)[1] == ".h":
+        target_filename = cpp_utils.header_change(target_filename, force=True)
+
     for d in data:
-        candidate = d["file"] if not search_by_basename else os.path.basename(d["file"])
-        if target_filename == candidate:
-            return CompDBEntry.from_entry(d)
+        if target_filename == d["file"] or os.path.basename(target_filename) == os.path.basename(d["file"]):
+            return target_filename, CompDBEntry.from_entry(d)
 
     raise Exception(f"No entry found for {target_filename}")
 
