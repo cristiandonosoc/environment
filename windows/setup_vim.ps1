@@ -16,18 +16,11 @@ git config --global credential.helper manager-core
 # Configure nvim-qt to be the editor so that we can invoke it from cli nvim.
 git config --global core.editor "nvim-qt"
 
-if ($(winget list "python 3.9" | Select-String "No installed package found")) {
-	Write-Host "INSTALL Python 3.9"
-	winget install -e --id Python.Python.3.9
-} else {
-	Write-Host "PYTHON: v3.9 already installed."
-}
-
 # Check for pynvim module.
-if ($(pip list | Select-String "pynvim")) {
+if ($(python -m pip list | Select-String "pynvim")) {
 	Write-Host "NEOVIM PYTHON MODULE: already installed."
 } else {
-	pip install --user pynvim
+	python -m pip install --user pynvim
 }
 
 # Install the nvim config.

@@ -32,6 +32,9 @@ Enjoy!
 ## Neovim setup
 
 - Install neovim: https://github.com/neovim/neovim/wiki/Installing-Neovim
+- Install python: https://www.python.org/downloads/
+  - Remember to add to PATH, because windows pre-installed python sucks!
+- Run "winget" once to accept the agreement (oth
 - Run windows\setup_vim.ps1
 	- Remember the execution bypass for powershell scripts.
 	- TODO(cdc): You might need to re-run the script because pip might not be loaded
@@ -50,9 +53,10 @@ TODO(cdc): Automate this
 winget install -e --id Kitware.CMake
 ```
 
-2. Install Go
-3. Install Rust
-4. Compile YouCompleteMe
+2. Install MSVC C++ Build tools: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+3. Install Go
+4. Install Rust
+5. Compile YouCompleteMe
 ```
 cd %USERPROFILE%\.nvim\plugged\YouCompleteMe
 ```
