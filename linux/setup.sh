@@ -77,3 +77,11 @@ sudo apt-get install -y cmake
 ## -------------------------------------------------------------------------------------------------
 
 sudo apt-get install -y ripgrep
+sudo apt-get install -y fd-find
+
+## STARSHIP
+## -----------------------------------------------------------------------------
+#
+# Starship is a cross-platform prompt written in rust.
+
+curl -sS https://starship.rs/install.sh | sh

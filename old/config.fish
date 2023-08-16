@@ -1,12 +1,6 @@
 # Paths
 set PATH ~/Local/bin $PATH
-set PATH ~/.cargo/bin $PATH
 set PATH /usr/local/go/bin $PATH
-set PATH $PATH /mnt/c/Program\ Files/go/bin
-set PATH $PATH /mnt/c/haven/tools
-set PATH $PATH /mnt/c/ProgramData/chocolatey/bin
-set PATH $PATH /mnt/c/tools/bin
-set PATH $PATH /mnt/c/src/bin/windows
 
 # aliases
 alias ll "ls -lha"
@@ -85,13 +79,3 @@ switch (uname)
       xmodmap -e "keycode 66 = Escape NoSymbol Escape"
     end
 end
-
-function goto_haven
-  cd /mnt/c/haven
-end
-
-function goto_p4
-  cd /mnt/c/src
-end
-
-
