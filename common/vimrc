@@ -7,16 +7,18 @@ let g:mapleader = ","
 
 set runtimepath=$VIMRUNTIME,~/.nvim,~/.nvim/after,~/.nvim/autoload
 
-function! s:loadExtraVimFileIfExists(path)
-if !empty(glob(a:path))
-	execute "source " . expand(a:path)
-else
-	echoerr "vimfile doesn't exist: " . a:path
-endif
+function! s:loadExtraVimFileIfExists(file)
+		execute 'source ' . a:file
 endfunction
 
 " VUNDLE (PLUGINS)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let data_dir = '~/.nvim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 set rtp+=~/.nvim/autoload
 
 call plug#begin('$HOME/.nvim/plugged')
@@ -58,7 +60,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'bfrg/vim-cpp-modern'
 
 " LSP Config.
-Plug 'neovim/nvim-lspconfig'
+" Plug 'neovim/nvim-lspconfig'
 
 " Rust tools.
 Plug 'simrat39/rust-tools.nvim'
@@ -464,10 +466,15 @@ au BufRead,BufNewFile *.Jenkinsfile setfiletype groovy
 " PLATFORM SPECIFIC CONFIGURATIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-call s:loadExtraVimFileIfExists("~/.vimrc.windows")
+if has('win32') || has('win64')
+	call s:loadExtraVimFileIfExists("~/.vimrc.windows")
+endif
+
+if has('unix')
 " call s:loadExtraVimFileIfExists("~/.vimrc.linux")
+endif
 
 " EXTRAS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-call s:loadExtraVimFileIfExists("~/.vimrc.extras")
+call s:loadExtraVimFileIfExists("~/.nvim/vimrc_extras.vim")
