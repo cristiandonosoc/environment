@@ -1,0 +1,37 @@
+Install windows terminal
+- Fonts
+- Config
+
+Install python
+Install neovim
+
+https://github.com/uutils/coreutils/releases
+Run coreutils script (in admin)
+```
+powershell -executionpolicy bypass <SCRIPT>
+```
+
+Add to PATH
+C:\cdc\bin
+C:\cdc\bin\coreutils
+
+Mason: 
+- Requires 7zip -> Add to PATH
+
+Install Go
+Install pwsh (Cross platform powershell): https://github.com/PowerShell/PowerShell
+Install riprep (https://github.com/BurntSushi/ripgrep)
+Install fd (https://github.com/sharkdp/fd)
+Install Everything (https://www.voidtools.com/)
+Install Chocolatey (https://chocolatey.org/install#individual)
+Install Bazelisk (on Administrator)
+```
+choco install bazelisk
+```
+Install Msys2 (Follow https://bazel.build/install/windows)
+-> Install the pacman dependencies
+-> add BAZEL_SH env to the path of the installed bash.exe
+
+Install clang (https://github.com/llvm/llvm-project/releases/)
+
+TODO: Fuzzy sorter native (https://github.com/nvim-telescope/telescope.nvim/wiki/Extensions)
