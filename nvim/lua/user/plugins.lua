@@ -99,6 +99,7 @@ return packer.startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
+	use("nvim-treesitter/nvim-treesitter-context")
 
 	-- Automatically set up your config after cloning packer.nvim.
 	if PACKER_BOOTSTRAP then
