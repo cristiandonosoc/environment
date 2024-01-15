@@ -72,7 +72,8 @@ local function lsp_signature(buffer)
 		handler_opts = {
 			border = "rounded",
 		},
-		hint_prefix = "🔰"
+		hint_prefix = "🔰",
+		floating_window_above_cur_line = false,
 	}, buffer)
 end
 
@@ -91,21 +92,9 @@ local function lsp_keymaps(buffer)
 	-- keymap(buffer, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", options)
 	-- keymap(buffer, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", options)
 
-	keymap(
-		buffer,
-		"n",
-		"[d",
-		'<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>',
-		options
-	)
+	keymap(buffer, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', options)
 	keymap(buffer, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", options)
-	keymap(
-		buffer,
-		"n",
-		"]d",
-		'<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>',
-		options
-	)
+	keymap(buffer, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', options)
 	keymap(buffer, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", options)
 
 	keymap(buffer, "n", "<C-s>", "<cmd>lua require('lsp_signature').toggle_float_win()<cr>", options)
