@@ -217,28 +217,28 @@
             "white": "#D3D7CF",
             "yellow": "#C4A000"
         },
-        {
-            "background": "#000000",
-            "black": "#000000",
-            "blue": "#000080",
-            "brightBlack": "#808080",
-            "brightBlue": "#0000FF",
-            "brightCyan": "#00FFFF",
-            "brightGreen": "#00FF00",
-            "brightPurple": "#FF00FF",
-            "brightRed": "#FF0000",
-            "brightWhite": "#FFFFFF",
-            "brightYellow": "#FFFF00",
-            "cursorColor": "#FFFFFF",
-            "cyan": "#008080",
-            "foreground": "#C0C0C0",
-            "green": "#008000",
-            "name": "Vintage",
-            "purple": "#800080",
-            "red": "#800000",
-            "selectionBackground": "#FFFFFF",
-            "white": "#C0C0C0",
-            "yellow": "#808000"
-        }
+{
+    "background": "#1a1b26",
+    "black": "#15161e",
+    "blue": "#7aa2f7",
+    "brightBlack": "#414868",
+    "brightBlue": "#7aa2f7",
+    "brightCyan": "#7dcfff",
+    "brightGreen": "#9ece6a",
+    "brightPurple": "#9d7cd8",
+    "brightRed": "#f7768e",
+    "brightWhite": "#c0caf5",
+    "brightYellow": "#e0af68",
+    "cursorColor": "#c0caf5",
+    "cyan": "#7dcfff",
+    "foreground": "#c0caf5",
+    "green": "#9ece6a",
+    "name": "Tokyo Night",
+    "purple": "#bb9af7",
+    "red": "#f7768e",
+    "selectionBackground": "#283457",
+    "white": "#a9b1d6",
+    "yellow": "#e0af68"
+}
     ]
 }

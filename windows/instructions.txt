@@ -33,5 +33,6 @@ Install Msys2 (Follow https://bazel.build/install/windows)
 -> add BAZEL_SH env to the path of the installed bash.exe
 
 Install clang (https://github.com/llvm/llvm-project/releases/)
+Install stylua (https://github.com/JohnnyMorganz/StyLua)
 
 TODO: Fuzzy sorter native (https://github.com/nvim-telescope/telescope.nvim/wiki/Extensions)
