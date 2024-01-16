@@ -101,6 +101,9 @@ return packer.startup(function(use)
 	})
 	use("nvim-treesitter/nvim-treesitter-context")
 
+	-- Spell-checking.
+	use("f3fora/cmp-spell")
+
 	-- Automatically set up your config after cloning packer.nvim.
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

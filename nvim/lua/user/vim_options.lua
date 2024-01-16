@@ -222,3 +222,8 @@ function! s:TermForceCloseAll() abort
 endfunction
 autocmd QuitPre * call <sid>TermForceCloseAll()
 ]])
+
+-- SPELLING ----------------------------------------------------------------------------------------
+
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
