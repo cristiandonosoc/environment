@@ -6,73 +6,91 @@ These are the instructions for setting my common development setup for Windows.
 
 - Go to windows setup, Sound, select default beep and map to "None".
 
-# Fork
+## Windows Terminal
 
-- Install git for windows, with "git credentials manager".
-  - Make sure that you login with your github credentials.
-- clone https://github.com/cristiandonosoc/environment
+Install windows terminal
+- Fonts (https://www.nerdfonts.com/font-downloads)
+    - Agave Nerd Font works fine, but any will do.
+- Copy the config json pointed here into the the config
 
-## Windows Terminal Config
-
-- For windows terminal, replace the keys in windows_terminal_config.json into the terminal config.
-- Install a nice font from https://www.nerdfonts.com/font-downloads
-	- Meslo Nerd Font is nice
-	- Install it and then configure Windows terminal to use it.
-
-### Clink
+## Clink
 
 Clink is a very good batch enhancement.
 
-- Install enhanced clink from https://github.com/chrisant996/clink
-- Install https://github.com/chrisant996/clink-flex-prompt
-- Set it to bash mode: `clink set clink.default_bindings bash`
+- Install clink: https://chrisant996.github.io/clink/
+    - Install the Flex prompt enhancement: https://github.com/chrisant996/clink-flex-prompt
 
-Enjoy!
-
-## Neovim setup
-
-- Install neovim: https://github.com/neovim/neovim/wiki/Installing-Neovim
-- Install python: https://www.python.org/downloads/
-  - Remember to add to PATH, because windows pre-installed python sucks!
-- Run "winget" once to accept the agreement (oth
-- Run windows\setup_vim.ps1
-	- Remember the execution bypass for powershell scripts.
-	- TODO(cdc): You might need to re-run the script because pip might not be loaded
-	             into PATH since it's been installed in the same environment.
-- Within nvim, run "PlugInstall"
-- Add "C:\cdc\bin" and "C:\cdc\bin\coreutils" to PATH (via dialog).
-
-### YouCompleteMe
-
-YouCompleteMe needs to be compiled before it can work.
-TODO(cdc): Automate this
-
-1. Install CMake:
-
+Set this setting:
+Make sure that we don't use Windows style completion (which sucks).
 ```
-winget install -e --id Kitware.CMake
+clink set clink.default_bindings bash
 ```
 
-2. Install MSVC C++ Build tools: https://visualstudio.microsoft.com/visual-cpp-build-tools/
-3. Install Go
-4. Install Rust
-5. Compile YouCompleteMe
+Correct completion highlighting.
 ```
-cd %USERPROFILE%\.nvim\plugged\YouCompleteMe
+clink set match.coloring_rules  di=93:ro ex=1;32:ex=1:ro=32:di *.tmp=90
 ```
 
-### Rust(-analyzer)
+## Core Utils
 
-Download the latest Rust-analyzer from https://github.com/rust-lang/rust-analyzer and put in
+These are the gnu utilities (cp, ls) to be available.
+We use a built made in Rust: https://github.com/uutils/coreutils/releases
+
+For that we create a ton of little batch script that wrap over this binary:
+Run coreutils script (in admin)
+```
+powershell -executionpolicy bypass .\setup_coreutils.ps1
+```
+
+Add to PATH
+```
 C:\cdc\bin
-
-That will enable LspConfig
-
-## Extras
-
-- Install [Ripgrep](https://github.com/BurntSushi/ripgrep), put it in C:\cdc\bin
-- Install [Black](https://github.com/psf/black) (A Python formatter):
+C:\cdc\bin\coreutils
 ```
-pip install --user black
+
+## Neovim
+
+### Dependencies
+
+- Install latest python 3 (https://www.python.org/downloads/windows/)
+
+Install Neovim-python hook:
 ```
+python -m pip  install --user pynvim
+```
+
+- Install 7zip
+    - Required by Mason
+    - Add to PATH
+- Install Go: https://go.dev/doc/install
+- Install pwsh (Cross platform powershell): https://github.com/PowerShell/PowerShell
+- Install riprep: https://github.com/BurntSushi/ripgrep
+- Install fd: https://github.com/sharkdp/fd
+- Install Everything: https://www.voidtools.com/
+- Install Chocolatey: https://chocolatey.org/install#individual
+- Install Bazelisk:
+on Administrator run
+```
+choco install bazelisk
+```
+
+- Install Msys2 (Follow https://bazel.build/install/windows)
+    - Install the pacman dependencies
+    - add BAZEL_SH env to the path of the installed bash.exe
+
+- Install clang: https://github.com/llvm/llvm-project/releases/
+- Install stylua: https://github.com/JohnnyMorganz/StyLua
+
+### The editor
+
+- Install neovim (https://neovim.io/)
+- Make a juntion this config into the place where Neovim expects:
+```
+mklink /J C:\Users\<user>\AppData\Local\nvim <Full Path to Repo>\nvim
+```
+
+Once installed open the editor a few times and the installation of the things should work.
+If there is an error, update this list with the fix.
+
+TODO: Fuzzy sorter native (https://github.com/nvim-telescope/telescope.nvim/wiki/Extensions)
 

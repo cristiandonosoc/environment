@@ -4,6 +4,6 @@ if not ok then
 end
 
 toggleterm.setup({
-	size = 20,
+	size = 30,
 	start_in_insert = false,
 })
