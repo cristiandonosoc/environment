@@ -7,6 +7,7 @@ configs.setup({
 	ensure_installed = {
 		-- These should always be in (according to doc).
 		"c",
+		"cpp",
 		"lua",
 		"vim",
 		"vimdoc",
