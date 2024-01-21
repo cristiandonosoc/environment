@@ -67,13 +67,40 @@ local function lsp_signature(buffer)
 		return
 	end
 
+	local MAX_HEIGHT = 8
+	local MAX_WIDTH = 100
+
 	signature.on_attach({
 		bind = true,
 		handler_opts = {
 			border = "rounded",
 		},
 		hint_prefix = "🔰",
-		floating_window_above_cur_line = false,
+		max_width = MAX_WIDTH,
+		max_height = MAX_HEIGHT,
+		floating_window_above_cur_line = true,
+		floating_window_off_y = function()
+			-- local lineno = vim.api.nvim_win_get_cursor(0)[1]
+			-- local pumheight = vim.o.pumheight
+			local pumheight = MAX_HEIGHT
+			local winline = vim.fn.winline()
+			local winheight = vim.fn.winheight(0)
+
+			-- We try on bottom first.
+			if winheight - winline > pumheight then
+				local value = pumheight + 2
+				return value
+				-- return pumheight+2
+			end
+
+			-- Then we try on top.
+			if winline - 1 < pumheight then
+				local value = -pumheight
+				return value
+			end
+
+			return 0
+		end,
 	}, buffer)
 end
 

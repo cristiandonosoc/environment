@@ -61,8 +61,8 @@ autocmd FileChangedShellPost *
 vim.opt.termguicolors = true -- Support more colors.
 
 -- 7 lines from the top/bottom of the buffer will begin scrolling
-vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 8
+vim.opt.scrolloff = 10
+vim.opt.sidescrolloff = 10
 
 -- No numbers in the left.
 vim.opt.number = false
