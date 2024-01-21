@@ -107,6 +107,25 @@ keymap("n", "<leader>r", "<cmd>lua require('telescope.builtin').lsp_references()
 keymap("n", "gdv", "<cmd>vs | lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "gdx", "<cmd>sp | lua vim.lsp.buf.definition()<cr>", options)
 
+local function quick_fix()
+	vim.lsp.buf.code_action({
+		filter = function(a)
+			if a.isPreferred ~= nil then
+				return a.isPreferred
+			end
+
+			if a.kind ~= "quickfix" then
+				return true
+			end
+
+			return false
+		end,
+		apply = true,
+	})
+end
+vim.keymap.set("n", "<leader>qf", quick_fix, options)
+vim.keymap.set("n", "<leader>qa", "<cmd>lua vim.lsp.buf.code_action()<cr>", options)
+
 -- FORMAT ------------------------------------------------------------------------------------------
 
 keymap("n", "<tab>", ":FormatWriteLock<cr>", options)
