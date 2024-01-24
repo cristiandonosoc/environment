@@ -232,3 +232,6 @@ vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }
 -- Make spelling treat camelcase as separate words, and only spell-check syntax enabled types.
 vim.opt.spelloptions = "camel,noplainbuffer"
+vim.cmd([[au BufRead,BufNewFile *.yml setlocal nospell]])
+
+
