@@ -9,6 +9,7 @@ end
 local servers = {
 	"lua_ls",
 	"gopls",
+	"clangd",
 }
 
 local lsp_handlers = require("user.lsp.handlers")

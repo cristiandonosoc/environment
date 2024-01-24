@@ -155,3 +155,11 @@ pragma
 printf
 FlagName
 Child1
+defs
+sizeof
+bzl
+googletest
+gtest
+alloc
+fastbuild
+gofmt
