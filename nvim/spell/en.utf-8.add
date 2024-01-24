@@ -178,3 +178,11 @@ Args
 execpath
 src
 stackoverflow
+defs
+sizeof
+bzl
+googletest
+gtest
+alloc
+fastbuild
+gofmt
