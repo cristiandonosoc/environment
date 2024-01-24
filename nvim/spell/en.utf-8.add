@@ -186,3 +186,13 @@ gtest
 alloc
 fastbuild
 gofmt
+Ibazel
+Iexternal
+googlemock
+Wextra
+Werror
+Wno
+variadic
+fexceptions
+DNDEBUG
+xc

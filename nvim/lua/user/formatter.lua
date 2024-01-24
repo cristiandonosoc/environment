@@ -23,5 +23,8 @@ formatter.setup({
 		lua = {
 			require("formatter.filetypes.lua").stylua,
 		},
+		cpp = {
+			require("formatter.filetypes.cpp").clangformat
+		},
 	},
 })
