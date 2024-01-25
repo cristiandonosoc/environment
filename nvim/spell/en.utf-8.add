@@ -196,3 +196,5 @@ variadic
 fexceptions
 DNDEBUG
 xc
+Wmissing
+Wimplicit

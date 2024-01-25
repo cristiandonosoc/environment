@@ -211,7 +211,7 @@ local default = {
         basic.vi_mode,
         basic.file,
         basic.lsp_diagnos,
-		basic.lsp_signature,
+		--basic.lsp_signature,
         basic.divider,
         basic.file_right,
         basic.lsp_name,
