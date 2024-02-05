@@ -10,6 +10,7 @@ local servers = {
 	"lua_ls",
 	"gopls",
 	"clangd",
+	"rust_analyzer",
 }
 
 local lsp_handlers = require("user.lsp.handlers")

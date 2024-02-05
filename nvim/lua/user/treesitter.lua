@@ -14,6 +14,7 @@ configs.setup({
 		"query",
 		-- Insert your languages here.
 		"go",
+		"rust",
 	},
 	highlight = {
 		enable = true,

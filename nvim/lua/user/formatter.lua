@@ -26,5 +26,8 @@ formatter.setup({
 		cpp = {
 			require("formatter.filetypes.cpp").clangformat
 		},
+		rust = {
+			require("formatter.filetypes.rust").rustfmt
+		}
 	},
 })
