@@ -104,6 +104,14 @@ return packer.startup(function(use)
 	-- Spell-checking.
 	use("f3fora/cmp-spell")
 
+	-- Lazygit.
+	use({
+		"kdheepak/lazygit.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
+
 	-- Automatically set up your config after cloning packer.nvim.
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

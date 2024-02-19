@@ -104,6 +104,7 @@ keymap("n", "<leader>r", "<cmd>lua require('telescope.builtin').lsp_references()
 
 -- LSP ---------------------------------------------------------------------------------------------
 
+keymap("n", "gdd", "lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "gdv", "<cmd>vs | lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "gdx", "<cmd>sp | lua vim.lsp.buf.definition()<cr>", options)
 
