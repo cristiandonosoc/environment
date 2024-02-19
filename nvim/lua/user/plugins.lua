@@ -101,9 +101,6 @@ return packer.startup(function(use)
 	})
 	use("nvim-treesitter/nvim-treesitter-context")
 
-	-- Spell-checking.
-	use("f3fora/cmp-spell")
-
 	-- Lazygit.
 	use({
 		"kdheepak/lazygit.nvim",
