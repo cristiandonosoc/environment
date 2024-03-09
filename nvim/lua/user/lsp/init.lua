@@ -5,7 +5,13 @@ if not lspconfig_ok then
 end
 
 -- SERVERS WITH SPECIFIC CONFIGS
--- IMPORTANT: If there is an entry here, there should be an lsp/settings/<server>.lua file.
+
+local auto_install_servers = {
+	"lua_ls",
+	"gopls",
+	"rust_analyzer",
+}
+
 local servers = {
 	"lua_ls",
 	"gopls",
@@ -26,8 +32,8 @@ require("mason").setup({
 	},
 })
 require("mason-lspconfig").setup({
-	ensure_installed = servers,
-	automatic_installation = true,
+	ensure_installed = auto_install_servers,
+	automatic_installation = false,
 })
 
 local options = {}
@@ -46,7 +52,7 @@ for _, server in pairs(servers) do
 	if ok then
 		options = vim.tbl_deep_extend("force", result, options)
 	else
-		if not string.match(result, "module '.*' not found") then
+		if not string.match(result, "module 'user.lsp.settings.*' not found") then
 			vim.notify("could not load config for " .. path .. ": " .. result)
 		end
 	end
