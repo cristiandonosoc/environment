@@ -191,7 +191,7 @@ endfunc
 autocmd BufWrite * :call DeleteTrailingWS()
 ]])
 
-vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+-- vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 
 vim.opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
 
