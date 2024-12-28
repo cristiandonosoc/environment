@@ -11,3 +11,7 @@ Some old setup:
 - Linux
 - OSX
 
+
+## install
+
+mklink /J C:\cdc\environment\nvim C:\Users\crist\AppData\Local\nvim
