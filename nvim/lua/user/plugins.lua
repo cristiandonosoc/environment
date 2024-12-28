@@ -54,6 +54,8 @@ return packer.startup(function(use)
 
 	use("djoshea/vim-autoread") -- Automatically reload externally modified files.
 
+	use("preservim/nerdtree")
+
 	use("webdevel/tabulous") -- A bit Better tabs.
 
 	-- cmp (completion).
@@ -82,8 +84,8 @@ return packer.startup(function(use)
 	use("mhartington/formatter.nvim")
 
 	-- NvimTree (file explorer plugin).
-	use("nvim-tree/nvim-web-devicons")
-	use("nvim-tree/nvim-tree.lua")
+	--use("nvim-tree/nvim-web-devicons")
+	--use("nvim-tree/nvim-tree.lua")
 
 	-- Windline (nicer status line for files).
 	use("windwp/windline.nvim")
