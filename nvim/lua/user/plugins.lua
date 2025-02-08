@@ -111,6 +111,8 @@ return packer.startup(function(use)
 		},
 	})
 
+	use("tikhomirov/vim-glsl")
+
 	-- Automatically set up your config after cloning packer.nvim.
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
