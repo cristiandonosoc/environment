@@ -28,6 +28,9 @@ formatter.setup({
 		},
 		rust = {
 			require("formatter.filetypes.rust").rustfmt
-		}
+		},
+        glsl = {
+			require("formatter.filetypes.cpp").clangformat
+        }
 	},
 })
