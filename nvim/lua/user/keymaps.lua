@@ -108,6 +108,9 @@ keymap("n", "gdd", "<cmd>lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "<A-f>", "<cmd>lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "<A-F>", "<cmd>vs | lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "gdv", "<cmd>vs | lua vim.lsp.buf.definition()<cr>", options)
+keymap("n", "<A-o>", "<cmd>ClangdSwitchSourceHeader<cr>", options)
+keymap("n", "<A-O>", "<cmd>vs | ClangdSwitchSourceHeader<cr>", options)
+
 
 local function quick_fix()
 	vim.lsp.buf.code_action({
