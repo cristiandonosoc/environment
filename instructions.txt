@@ -1,0 +1,15 @@
+1. 
+
+git clone environment into C:\cdc\environment
+Windows Terminal > Set configuration JSON
+Install clink
+Install clink flex 
+clink set clink.default_bindings bash
+Install scoop
+scoop install coreutils
+add `--color` to ls.shim (from scoop)
+Install python3
+scoop install neovim
+mklink /J C:\Users\<USERNAME>\AppData\Local\nvim C:\cdc\environment\nvim
+Open nvim and install everything
+
