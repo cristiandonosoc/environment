@@ -67,14 +67,6 @@ keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", options)
 -- Keep the pasting thing in the register.
 keymap("v", "p", [["_dP]], options)
 
--- VISUAL BLOCK ------------------------------------------------------------------------------------
-
--- Move lines around.
-keymap("x", "<A-j>", ":m '>+1<cr>gv=gv", options)
-keymap("x", "<A-k>", ":m '<-2<cr>gv=gv", options)
-
--- EXTRAS ------------------------------------------------------------------------------------------
-
 -- Copy to clipboard.
 keymap("n", "<leader>y", [["y]], options)
 keymap("n", "<leader>Y", [["yg_]], options)
