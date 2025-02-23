@@ -60,10 +60,6 @@ vim.cmd("cabbrev q close")
 keymap("v", "<", "<gv", options)
 keymap("v", ">", ">gv", options)
 
--- Move lines around.
-keymap("v", "<A-j>", ":m '>+1<cr>gv=gv", options)
-keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", options)
-
 -- Keep the pasting thing in the register.
 keymap("v", "p", [["_dP]], options)
 
