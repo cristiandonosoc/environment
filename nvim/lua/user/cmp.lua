@@ -58,6 +58,7 @@ cmp.setup({
 			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
 			vim_item.menu = ({
+				copilot = "[COPILOT]",
 				nvim_lua = "[NVIM-LUA]",
 				nvim_lsp = "[LSP]",
 				luasnip = "[Snippet]",
@@ -70,6 +71,7 @@ cmp.setup({
 	-- The order of the sources does matter, as they will be the order in which they are suggested
 	-- in the prompt.
 	sources = {
+		{ name = "copilot" },
 		{ name = "nvim_lua" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
