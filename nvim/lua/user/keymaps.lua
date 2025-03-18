@@ -41,10 +41,6 @@ keymap("n", "<S-l>", ":bnext<cr>", options)
 keymap("n", "B", "^", options)
 keymap("n", "E", "$", options)
 
--- Move line around
-keymap("n", "<A-j>", ":m .+1<cr>==", options)
-keymap("n", "<A-k>", ":m .-2<cr>==", options)
-
 -- Make saving more hardcode (https://www.reddit.com/r/neovim/comments/owl1wg/job_still_running/)
 vim.cmd("command Z w | qa")
 vim.cmd("cabbrev wqa Z")
