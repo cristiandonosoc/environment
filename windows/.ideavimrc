@@ -37,70 +37,11 @@
 " , is my leader
 let g:mapleader = ","
 
-set runtimepath=$VIMRUNTIME,~/.nvim,~/.nvim/after,~/.nvim/autoload
-
-function! s:loadExtraVimFileIfExists(path)
-if !empty(glob(a:path))
-	execute "source " . expand(a:path)
-else
-	echoerr "vimfile doesn't exist: " . a:path
-endif
-endfunction
 
 " VUNDLE (PLUGINS)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set rtp+=~/.nvim/autoload
 
-asdasdsadasd
-
-call plug#begin('$HOME/.nvim/plugged')
-
-" Plugin handler
-" Plugin 'VundleVim/Vundle.vim'
-
-" Better filesystem management
-Plug 'scrooloose/nerdtree'
-
-" Solarized colorscheme
-Plug 'altercation/vim-colors-solarized'
-
-" Easier comments
-Plug 'tpope/vim-commentary'
-
-" Autocomplete with C/C++ semantics
-" Plug 'Valloric/YouCompleteMe'
-
-" OpenGL syntax
-Plug 'tikhomirov/vim-glsl'
-
-" Many colorschemes!
-Plug 'flazz/vim-colorschemes'
-
-" Automatically reload externally modified files.
-Plug 'djoshea/vim-autoread'
-
-" Better info line.
-Plug 'bling/vim-airline'
-
-" A bit Better tabs
-" Plug 'webdevel/tabulous'
-
-" Terraform support
-Plug 'hashivim/vim-terraform'
-
-" Better C++ highlighting.
-" Plug 'bfrg/vim-cpp-modern'
-
-" LSP Config.
-" Plug 'neovim/nvim-lspconfig'
-
-" Rust tools.
-Plug 'simrat39/rust-tools.nvim'
-
-" Inlay hints.
-" Plug 'simrat39/inlay-hints.nvim'
-
-call plug#end()
 
 " GENERIC STARTUP & UI
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
