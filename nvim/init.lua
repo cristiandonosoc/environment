@@ -13,4 +13,4 @@ require("user.treesitter")
 -- Keymaps should go at the end.
 require("user.keymaps")
 
-require("user.copilot")
+-- require("user.copilot")

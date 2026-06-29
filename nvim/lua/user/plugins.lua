@@ -58,15 +58,13 @@ return packer.startup(function(use)
 
 	use("webdevel/tabulous") -- A bit Better tabs.
 
-	use("zbirenbaum/copilot.lua")
-
-	use({
-		"zbirenbaum/copilot-cmp",
-		after = { "copilot.lua" },
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	})
+	-- use({
+	-- 	"zbirenbaum/copilot-cmp",
+	-- 	after = { "copilot.lua" },
+	-- 	config = function()
+	-- 		require("copilot_cmp").setup()
+	-- 	end,
+	-- })
 
 	-- cmp (completion).
 	use("hrsh7th/nvim-cmp") -- The completion engine plugin.
@@ -94,7 +92,7 @@ return packer.startup(function(use)
 	use("mhartington/formatter.nvim")
 
 	-- NvimTree (file explorer plugin).
-	--use("nvim-tree/nvim-web-devicons")
+	use("nvim-tree/nvim-web-devicons")
 	--use("nvim-tree/nvim-tree.lua")
 
 	-- Windline (nicer status line for files).
@@ -122,6 +120,31 @@ return packer.startup(function(use)
 	})
 
 	use("tikhomirov/vim-glsl")
+
+	-- Required plugins
+	use("stevearc/dressing.nvim")
+	use("MunifTanjim/nui.nvim")
+	use("MeanderingProgrammer/render-markdown.nvim")
+
+	-- Avante.nvim with build process
+	use({
+		"yetone/avante.nvim",
+		branch = "main",
+		run = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false",
+		config = function()
+			require("avante").setup({
+
+				provides = {
+					claude = {
+						endpoint = "https://api.anthropic.com",
+						model = "claude-3-5-sonnet-20241022",
+						temperature = 0,
+						max_tokens = 4096,
+					},
+				},
+			})
+		end,
+	})
 
 	-- Automatically set up your config after cloning packer.nvim.
 	if PACKER_BOOTSTRAP then
