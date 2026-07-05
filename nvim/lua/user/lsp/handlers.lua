@@ -145,6 +145,19 @@ M.on_attach = function(client, buffer)
 		client.server_capabilities.documentFormattingProvider = false
 	end
 
+	if client.name == "clangd" then
+		vim.api.nvim_buf_create_user_command(buffer, "ClangdSwitchSourceHeader", function()
+			client:request("textDocument/switchSourceHeader", { uri = vim.uri_from_bufnr(0) }, function(err, result)
+				if err then
+					error(tostring(err))
+				end
+				if result then
+					vim.cmd.edit(vim.uri_to_fname(result))
+				end
+			end, 0)
+		end, { desc = "Switch between source/header" })
+	end
+
 	lsp_highlight_document(client)
 	lsp_signature(buffer)
 	lsp_keymaps(buffer)
