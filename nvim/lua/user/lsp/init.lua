@@ -34,6 +34,7 @@ require("mason").setup({
 require("mason-lspconfig").setup({
 	ensure_installed = auto_install_servers,
 	automatic_installation = false,
+	automatic_enable = false,
 })
 
 local options = {}

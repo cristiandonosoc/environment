@@ -41,6 +41,14 @@ M.setup = function()
 	vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
 		border = "rounded",
 	})
+
+	local ok, goto_preview = pcall(require, "goto-preview")
+	if ok then
+		goto_preview.setup({
+			border = "rounded",
+			stack_floating_preview_windows = false,
+		})
+	end
 end
 
 local function lsp_highlight_document(client)
@@ -113,6 +121,9 @@ local function lsp_keymaps(buffer)
 	keymap(buffer, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", options)
 	keymap(buffer, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", options)
 	keymap(buffer, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", options)
+	keymap(buffer, "n", "gpt", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", options)
+	keymap(buffer, "n", "<A-k>", "<cmd>lua require('goto-preview').goto_preview_type_definition()<CR>", options)
+	keymap(buffer, "n", "gpq", "<cmd>lua require('goto-preview').close_all_win()<CR>", options)
 	-- keymap(buffer, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", options)
 	-- keymap(buffer, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", options)
 	keymap(buffer, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", options)

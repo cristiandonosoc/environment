@@ -58,15 +58,15 @@ return packer.startup(function(use)
 
 	use("webdevel/tabulous") -- A bit Better tabs.
 
-	use("zbirenbaum/copilot.lua")
+	-- use("zbirenbaum/copilot.lua")
 
-	use({
-		"zbirenbaum/copilot-cmp",
-		after = { "copilot.lua" },
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	})
+	-- use({
+	-- 	"zbirenbaum/copilot-cmp",
+	-- 	after = { "copilot.lua" },
+	-- 	config = function()
+	-- 		require("copilot_cmp").setup()
+	-- 	end,
+	-- })
 
 	-- cmp (completion).
 	use("hrsh7th/nvim-cmp") -- The completion engine plugin.
@@ -102,6 +102,9 @@ return packer.startup(function(use)
 
 	-- LSP Signature hints.
 	use("ray-x/lsp_signature.nvim")
+
+	-- Floating preview windows for LSP goto-* requests (e.g. type definition).
+	use("rmagatti/goto-preview")
 
 	-- Toggleterm
 	use("akinsho/toggleterm.nvim")
