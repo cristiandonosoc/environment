@@ -29,9 +29,16 @@ require("mason-lspconfig").setup({
 	automatic_installation = false,
 })
 
--- Set on_attach and capabilities as defaults for all servers.
+-- Use LspAttach so our callback runs unconditionally, regardless of how
+-- lspconfig's bundled server configs merge their own on_attach.
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		lsp_handlers.on_attach(client, args.buf)
+	end,
+})
+
 vim.lsp.config("*", {
-	on_attach = lsp_handlers.on_attach,
 	capabilities = lsp_handlers.capabilities,
 })
 
