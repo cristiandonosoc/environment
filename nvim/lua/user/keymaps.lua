@@ -83,7 +83,7 @@ keymap("t", "<Esc>", "<C-\\><C-n>", options)
 -- TELESCOPE ---------------------------------------------------------------------------------------
 
 keymap("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>", options)
-keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep()<cr>", options)
+keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({ additional_args = { '--glob', '!third_party/**' } })<cr>", options)
 keymap("n", "<leader>r", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", options)
 
 -- LSP ---------------------------------------------------------------------------------------------
@@ -91,6 +91,8 @@ keymap("n", "<leader>r", "<cmd>lua require('telescope.builtin').lsp_references()
 keymap("n", "gdd", "<cmd>lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "<A-f>", "<cmd>lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "<A-F>", "<cmd>vs | lua vim.lsp.buf.definition()<cr>", options)
+keymap("n", "<A-g>", "<cmd>lua vim.lsp.buf.definition()<cr>", options)
+keymap("n", "<A-G>", "<cmd>vs | lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "gdv", "<cmd>vs | lua vim.lsp.buf.definition()<cr>", options)
 keymap("n", "<A-o>", "<cmd>ClangdSwitchSourceHeader<cr>", options)
 keymap("n", "<A-O>", "<cmd>vs | ClangdSwitchSourceHeader<cr>", options)
