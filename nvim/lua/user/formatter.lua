@@ -31,6 +31,9 @@ formatter.setup({
 		},
         glsl = {
 			require("formatter.filetypes.cpp").clangformat
-        }
+        },
+		python = {
+			require("formatter.filetypes.python").black
+		}
 	},
 })
